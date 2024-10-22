@@ -1,0 +1,25 @@
+.container_rodape{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    background-color: steelblue;
+    border: solid black 1px;
+    color: black;
+}
+
+.icones{
+    margin-left: 5px;
+}
+
+.icones:hover{
+    filter: invert(70%);
+} 
+
+
+.descricao{
+    font-size: 1.2em;
+}
