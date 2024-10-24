@@ -13,7 +13,7 @@ interface ItemActionProps {
 
 function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
-    const [tarefaEmExecucao, setTtarefaEmExecucao] = useState(false);
+    const { tarefaEmExecucao, setTtarefaEmExecucao } = useContext(CronometroContext);
 
     const { setModalState, arrayTarefas, setModalNome } = useContext(ModalContext);
 
@@ -31,7 +31,8 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { recuperarDados } = useContext(ModalContext);
 
-    const { setTempo, converterTempoParaSegundos, setCronometroAtivo, tempo, ativo, formatarTempo } = useContext(CronometroContext);
+    const { setTempo, preencherTempoRestanteNoTitulo,
+            setCronometroAtivo, tempo, formatarTempo, setIdAcao, idAcao } = useContext(CronometroContext);
 
     const obterIdCorrespondenteArray = (idTarefa: number): number => {
 
@@ -98,10 +99,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         }
     }
 
-    const preencherTempoRestanteNoTitulo = () :void =>{
-        const tempo_titulo = converterTempoParaSegundos(tempo_restante);
-        setTempo(tempo_titulo);
-    }
 
     const exibirModalApagarTarefa = (): void => {
         setModalNome("Apagar");
@@ -111,10 +108,8 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     }
     
     const identificarIdCorrespondente = (): number => {
-        return arrayTarefas.findIndex((item: any) => item.id === id);
+        return arrayTarefas.findIndex((item: any) => item.id === id);;
       }
-
-    const itemIndex = identificarIdCorrespondente();
 
     const colocarTarefaEmExecucao = (id: number): void =>{
         arrayTarefas[id].status = "Executando";
@@ -128,18 +123,18 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
       }
 
     const executarTarefa = (): void => {
-        preencherTempoRestanteNoTitulo();
+        preencherTempoRestanteNoTitulo(tempo_restante);
         setCronometroAtivo(true);
-        colocarTarefaEmExecucao(itemIndex);
+        colocarTarefaEmExecucao(idAcao);
         setTtarefaEmExecucao(true);
     }
 
     const atualizarTarefaEmExecucao = (): void => {
-        
-        const possuiTempoRestante = arrayTarefas[itemIndex].tempo_restante !== "00:00:00";
+
+        const possuiTempoRestante = arrayTarefas[idAcao].tempo_restante !== "00:00:00";
 
         if(possuiTempoRestante){
-            atualizaTempoRestante(itemIndex);
+            atualizaTempoRestante(idAcao);
         }
     }
 
@@ -152,20 +147,22 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     const pausarTarefa = (): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
-        arrayTarefas[itemIndex].status = "Pausada";
+        arrayTarefas[idAcao].status = "Pausada";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
     }
 
     const concluirTarefa = (): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
-        arrayTarefas[itemIndex].status = "Concluída";
-        arrayTarefas[itemIndex].tempo_restante = "00:00:00";
+        arrayTarefas[idAcao].status = "Concluída";
+        arrayTarefas[idAcao].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
         setTempo(0)
     }
 
     const executarOpcao = (): void => {
+        const itemIndex = identificarIdCorrespondente();
+        setIdAcao(itemIndex)
         switch (nome) {
             case "Executar":
                 executarTarefa();

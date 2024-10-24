@@ -26,6 +26,7 @@ interface ModalContextProps {
   descricaoToast: string;
   descricaoModalApagar: string;
   idTarefaApagar: number;
+  verificouTarefaExecutando: boolean;
   setCampoNome: (campo_nome: string) => void;
   setCampoDuracao: (campo_duracao: string) => void;
   setCampoPrazo: (campo_prazo: string) => void;
@@ -43,6 +44,7 @@ interface ModalContextProps {
   setDescricaoToast: (descricao_toast: string) => void;
   setDescricaoModalApagar: (descricao_modal_apagar: string) => void;
   setIdTarefaApagar: (id_tarefa_apagar: number) => void;
+  setVerificouTarefaExecutando: (tarefa_executando: boolean) => void;
 }
 
 // Criando o contexto com tipo adequado
@@ -78,6 +80,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   // Estado para armazenar as tarefas
   const [arrayTarefas, setArrayTarefas] = useState<Tarefa[]>([]);
 
+  const [verificouTarefaExecutando, setVerificouTarefaExecutando] = useState<boolean>(false);
+
   // Função para recuperar dados do localStorage
   const recuperarDados = () => {
     const dadosArmazenados = localStorage.getItem("tarefas");
@@ -112,7 +116,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
        setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled, campo_duracao_disabled,
        setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled, habilitarCamposForm,
        idTarefaEditada, setIdTarefaEditada, tituloToast, descricaoToast, setTituloToast, setDescricaoToast,
-       descricaoModalApagar, setDescricaoModalApagar, idTarefaApagar, setIdTarefaApagar}}>
+       descricaoModalApagar, setDescricaoModalApagar, idTarefaApagar, setIdTarefaApagar,
+       setVerificouTarefaExecutando, verificouTarefaExecutando}}>
         {children}
     </ModalContext.Provider>
   );

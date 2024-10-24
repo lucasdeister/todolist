@@ -21,9 +21,44 @@ function Main() {
   const { recuperarDados, arrayTarefas, modalState, setModalState, modalNome } = useContext(ModalContext);
   const { tempo, setTempo, ativo, formatarTempo } = useContext(CronometroContext);
 
+  const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(ModalContext);
+
+  const { setCronometroAtivo } = useContext(CronometroContext);
+
+  const { setTtarefaEmExecucao, preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
+
+  const verificarTarefaEmExecucao = (): any => {
+
+    const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
+
+        if(tarefaEmExecucao.length > 0){
+          return tarefaEmExecucao[0];
+        }else{
+          return null;
+        }
+  }
+
+  const continuarTarefaEmExecucao = (tarefa: any): void => {
+      preencherTempoRestanteNoTitulo(tarefa.tempo_restante);
+      setCronometroAtivo(true);
+      setTtarefaEmExecucao(true);
+      setVerificouTarefaExecutando(false);
+  }
+
   useEffect(() => {
     recuperarDados();
+    setVerificouTarefaExecutando(true);
   }, []);
+
+
+  useEffect(() => {
+    if(verificouTarefaExecutando && arrayTarefas.length > 0){
+      const tarefa = verificarTarefaEmExecucao();
+      if(tarefa){
+        continuarTarefaEmExecucao(tarefa);
+      }
+    }
+  }, [verificouTarefaExecutando]);
 
   return (
     <main className="container">
