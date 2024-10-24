@@ -47,7 +47,7 @@ function Main() {
   useEffect(() => {
     recuperarDados();
     setVerificouTarefaExecutando(true);
-  }, []);
+  }, [setVerificouTarefaExecutando]);
 
 
   const identificarIdCorrespondente = (id: number): number => {
@@ -65,8 +65,9 @@ function Main() {
       }
     }
 
-
-  }, [verificouTarefaExecutando]);
+  }, [verificouTarefaExecutando,
+     continuarTarefaEmExecucao, identificarIdCorrespondente,
+     verificarTarefaEmExecucao, setIdAcao]);
 
   return (
     <main className="container">
