@@ -32,7 +32,10 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     const { recuperarDados } = useContext(ModalContext);
 
     const { setTempo, preencherTempoRestanteNoTitulo,
-            setCronometroAtivo, tempo, formatarTempo, setIdAcao, idAcao } = useContext(CronometroContext);
+            setCronometroAtivo, tempo, formatarTempo, setIdAcao, idAcao
+         } = useContext(CronometroContext);
+
+    const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
 
     const obterIdCorrespondenteArray = (idTarefa: number): number => {
 
@@ -122,10 +125,10 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
           recuperarDados();
       }
 
-    const executarTarefa = (): void => {
+    const executarTarefa = (id: number): void => {
         preencherTempoRestanteNoTitulo(tempo_restante);
         setCronometroAtivo(true);
-        colocarTarefaEmExecucao(idAcao);
+        colocarTarefaEmExecucao(id);
         setTtarefaEmExecucao(true);
     }
 
@@ -140,6 +143,15 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     useEffect(() => {
         if(tarefaEmExecucao){
+            setBotaoExecutarDesativado(true);
+        }else{
+            setBotaoExecutarDesativado(false);
+        }
+    }, [tarefaEmExecucao]);
+
+
+    useEffect(() => {
+        if(tarefaEmExecucao){
             atualizarTarefaEmExecucao();
         }
     }, [tempo, tarefaEmExecucao]);
@@ -147,6 +159,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     const pausarTarefa = (): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
+        setBotaoExecutarDesativado(false);
         arrayTarefas[idAcao].status = "Pausada";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
     }
@@ -162,10 +175,10 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const executarOpcao = (): void => {
         const itemIndex = identificarIdCorrespondente();
-        setIdAcao(itemIndex)
+        setIdAcao(itemIndex);
         switch (nome) {
             case "Executar":
-                executarTarefa();
+                executarTarefa(itemIndex);
                 break;
             case "Editar":
                 exibirModalEdicao();
@@ -188,7 +201,10 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     return (
         <div>
             <li >
-                <button className="dropdown-item" onClick={executarOpcao}>
+                <button
+                    className="dropdown-item"
+                    onClick={executarOpcao}
+                    disabled={nome === 'Executar' && botaoExecutarDesativado}>
                     <i className={`bi bi-${nome_icone} me-2`}></i>
                     {nome}
                 </button>

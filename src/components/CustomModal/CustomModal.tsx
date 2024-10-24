@@ -46,6 +46,7 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   
   const apagarTarefasAFazer = (): void => {
 
+    // localStorage.removeItem('tarefas');
     const dadosArmazenados = arrayTarefas;
   
     if (dadosArmazenados) {

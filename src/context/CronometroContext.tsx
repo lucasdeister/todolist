@@ -5,6 +5,7 @@ interface CronometroContextProps {
   ativo: boolean;
   tarefaEmExecucao: boolean;
   idAcao: number;
+  botaoExecutarDesativado: boolean;
   setTempo: (tempo: number) => void;
   converterTempoParaSegundos: (tempo: string) => number;
   setCronometroAtivo: (status_cronometro: boolean) => void;
@@ -12,6 +13,7 @@ interface CronometroContextProps {
   setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
   preencherTempoRestanteNoTitulo: (tempo_restante: string) => void;
   setIdAcao: (id: number) => void;
+  setBotaoExecutarDesativado: (status_botao: boolean) => void;
 }
 
 export const CronometroContext = createContext<CronometroContextProps | undefined>(undefined);
@@ -28,6 +30,8 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   const [tarefaEmExecucao, setTtarefaEmExecucao] = useState<boolean>(false);
 
   const [idAcao, setIdAcao] = useState<number>(0);
+
+  const [botaoExecutarDesativado, setBotaoExecutarDesativado] = useState<boolean>(false);
 
   const converterTempoParaSegundos = (tempo: string): number => {
     const [horas, minutos, segundos] = tempo.split(":").map(Number);
@@ -55,7 +59,7 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   return (
     <CronometroContext.Provider value={{ tempo, setTempo, converterTempoParaSegundos,
      ativo, setCronometroAtivo, formatarTempo, tarefaEmExecucao, setTtarefaEmExecucao,
-     preencherTempoRestanteNoTitulo, idAcao, setIdAcao}}>
+     preencherTempoRestanteNoTitulo, idAcao, setIdAcao, botaoExecutarDesativado, setBotaoExecutarDesativado}}>
       {children}
     </CronometroContext.Provider>
   );
