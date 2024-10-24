@@ -67,7 +67,7 @@ function Main() {
 
   }, [verificouTarefaExecutando,
      continuarTarefaEmExecucao, identificarIdCorrespondente,
-     verificarTarefaEmExecucao, setIdAcao]);
+     verificarTarefaEmExecucao, setIdAcao, arrayTarefas]);
 
   return (
     <main className="container">
