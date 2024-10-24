@@ -1,6 +1,6 @@
 // import CustomToast from "../../../CustomToast/CustomToast";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../../context/ModalContext";
 import { CronometroContext } from "../../../../context/CronometroContext";
 
@@ -111,7 +111,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     }
     
     const identificarIdCorrespondente = (): number => {
-        return arrayTarefas.findIndex((item: any) => item.id === id);;
+        return arrayTarefas.findIndex((item: any) => item.id === id);
       }
 
     const colocarTarefaEmExecucao = (id: number): void =>{

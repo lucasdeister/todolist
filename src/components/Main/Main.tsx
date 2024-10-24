@@ -23,9 +23,9 @@ function Main() {
 
   const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(ModalContext);
 
-  const { setCronometroAtivo } = useContext(CronometroContext);
+  const { setCronometroAtivo, setIdAcao } = useContext(CronometroContext);
 
-  const { setTtarefaEmExecucao, preencherTempoRestanteNoTitulo, tarefaEmExecucao } = useContext(CronometroContext);
+  const { setTtarefaEmExecucao, preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
 
   const verificarTarefaEmExecucao = (): any => {
 
@@ -38,14 +38,10 @@ function Main() {
         }
   }
 
-
-
-
   const continuarTarefaEmExecucao = (tarefa: any): void => {
       preencherTempoRestanteNoTitulo(tarefa.tempo_restante);
       setCronometroAtivo(true);
       setTtarefaEmExecucao(true);
-      setVerificouTarefaExecutando(false);
   }
 
   useEffect(() => {
@@ -54,13 +50,22 @@ function Main() {
   }, []);
 
 
+  const identificarIdCorrespondente = (id: number): number => {
+    return arrayTarefas.findIndex((item: any) => item.id === id);
+  }
+
   useEffect(() => {
+
     if(verificouTarefaExecutando && arrayTarefas.length > 0){
       const tarefa = verificarTarefaEmExecucao();
       if(tarefa){
+        const id_tarefa_array = identificarIdCorrespondente(tarefa.id)
+        setIdAcao(id_tarefa_array);
         continuarTarefaEmExecucao(tarefa);
       }
     }
+
+
   }, [verificouTarefaExecutando]);
 
   return (

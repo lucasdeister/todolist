@@ -160,7 +160,7 @@ const verificarModal = (): void => {
         </Modal.Header>
         <Modal.Body>
           {/* Renderização Condicional */}
-          {nome_modal == "Criar Tarefa" || nome_modal == "Editar Tarefa" ? (
+          {nome_modal === "Criar Tarefa" || nome_modal === "Editar Tarefa" ? (
             <ContentModalTarefas 
               campo_nome={campo_nome}
               campo_duracao={campo_duracao}
