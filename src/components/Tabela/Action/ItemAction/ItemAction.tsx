@@ -156,11 +156,11 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         }
     }, [tempo, tarefaEmExecucao]);
 
-    const pausarTarefa = (): void => {
+    const pausarTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
         setBotaoExecutarDesativado(false);
-        arrayTarefas[idAcao].status = "Pausada";
+        arrayTarefas[id].status = "Pausada";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
     }
 
@@ -170,7 +170,16 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         arrayTarefas[idAcao].status = "Concluída";
         arrayTarefas[idAcao].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
-        setTempo(0)
+        setTempo(0);
+    }
+
+    const cancelarTarefa = (): void => {
+        setCronometroAtivo(false);
+        setTtarefaEmExecucao(false);
+        arrayTarefas[idAcao].status = "Cancelada";
+        arrayTarefas[idAcao].tempo_restante = "00:00:00";
+        localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
+        setTempo(0);
     }
 
     const executarOpcao = (): void => {
@@ -187,13 +196,13 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
                 exibirModalApagarTarefa();
                 break;
             case "Pausar":
-                pausarTarefa();
+                pausarTarefa(itemIndex);
                 break;
             case "Concluir":
                 concluirTarefa();
                 break;
-            default:
-                alert("c")
+            case "Cancelar":
+                cancelarTarefa();
                 break;
         }
     }
