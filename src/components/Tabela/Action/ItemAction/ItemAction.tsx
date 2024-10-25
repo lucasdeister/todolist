@@ -164,20 +164,20 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
     }
 
-    const concluirTarefa = (): void => {
+    const concluirTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
-        arrayTarefas[idAcao].status = "Concluída";
-        arrayTarefas[idAcao].tempo_restante = "00:00:00";
+        arrayTarefas[id].status = "Concluída";
+        arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
         setTempo(0);
     }
 
-    const cancelarTarefa = (): void => {
+    const cancelarTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
-        arrayTarefas[idAcao].status = "Cancelada";
-        arrayTarefas[idAcao].tempo_restante = "00:00:00";
+        arrayTarefas[id].status = "Cancelada";
+        arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
         setTempo(0);
     }
@@ -199,10 +199,10 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
                 pausarTarefa(itemIndex);
                 break;
             case "Concluir":
-                concluirTarefa();
+                concluirTarefa(itemIndex);
                 break;
             case "Cancelar":
-                cancelarTarefa();
+                cancelarTarefa(itemIndex);
                 break;
         }
     }
