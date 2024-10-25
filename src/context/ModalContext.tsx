@@ -109,6 +109,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     setCampoObservacoes("");
   };
 
+
   return (
     <ModalContext.Provider value={{
        modalState, setModalState, recuperarDados, limparStates, arrayTarefas, modalNome, setModalNome,

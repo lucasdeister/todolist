@@ -46,7 +46,6 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   
   const apagarTarefasAFazer = (): void => {
 
-    // localStorage.removeItem('tarefas');
     const dadosArmazenados = arrayTarefas;
   
     if (dadosArmazenados) {
@@ -137,6 +136,7 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
 const apagarTarefaIndividual = (id_tarefa: number): void => {
 
   const arrayAtualizado = arrayTarefas.filter((item: any) => item.id !== id_tarefa);
+
   localStorage.setItem('tarefas', JSON.stringify(arrayAtualizado));
   handleToast("Sucesso", "Tarefa apagada com sucesso!");
   handleClose();

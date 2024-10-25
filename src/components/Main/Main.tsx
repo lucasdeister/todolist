@@ -42,6 +42,7 @@ function Main() {
       preencherTempoRestanteNoTitulo(tarefa.tempo_restante);
       setCronometroAtivo(true);
       setTtarefaEmExecucao(true);
+      setVerificouTarefaExecutando(false);
   }
 
   useEffect(() => {
