@@ -1,10 +1,8 @@
 // import CustomToast from "../../../CustomToast/CustomToast";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../../context/ModalContext";
 import { CronometroContext } from "../../../../context/CronometroContext";
-
-
 
 interface ItemActionProps {
     nome: string;
@@ -12,16 +10,6 @@ interface ItemActionProps {
     id: number;
     tempo_restante: string;
 }
-
-interface Tarefa {
-    id: number;
-    nome: string;
-    prazo: string;
-    status: string;
-    duracao: string;
-    tempo_restante: string;
-    observacoes: string;
-  }
 
 function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
