@@ -2,14 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../components/Header/Header"
 import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
-import styles from "./App.module.css"
 import { ModalProvider } from '../context/ModalContext';
 import { CronometroProvider } from '../context/CronometroContext';
-
+import style from "./App.module.css"
 
 function App() {
   return (
-    <div className={styles.app}>
+    <div className={style.grid_container}>
       <Header/>
       <ModalProvider>
         <CronometroProvider>

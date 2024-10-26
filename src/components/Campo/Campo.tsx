@@ -12,8 +12,9 @@ function Campo({ nome, tipo, value, onChange, disabled }: CampoProps) {
 
   return (
     <div className="form-group mt-3">
-      <label className="form-label">{nome}</label>
-      <input 
+      <label htmlFor={nome.toLowerCase()} className="form-label">{nome}</label>
+      <input
+        id={nome.toLowerCase()}
         className="form-control" 
         type={tipo} 
         value={value} 

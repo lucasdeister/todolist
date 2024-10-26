@@ -10,8 +10,9 @@ interface TextAreaProps {
 function TextArea({ nome, value, onChange }: TextAreaProps) {
   return (
     <div className="mt-3">
-      <label className="form-label">{nome}</label>
+      <label htmlFor='observacoes' className="form-label">{nome}</label>
       <textarea
+        id='observacoes'
         className="form-control"
         value={value}
         onChange={onChange}

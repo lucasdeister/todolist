@@ -1,5 +1,7 @@
 import { Toast } from "react-bootstrap";
 
+import "./CustomToast.module.css"
+
 interface CustomToastProps{
     toast: boolean;
     exibirToast: () => void;

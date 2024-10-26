@@ -71,7 +71,7 @@ function Main() {
      verificarTarefaEmExecucao, setIdAcao, arrayTarefas]);
 
   return (
-    <main className="container">
+    <main className={style.container_main}>
       <hr className="m-5" />
       <div className={style.container_botoes_principais}>
         <BotaoPrincipal texto={"Criar Tarefa"} classe="success" handleShow={() => setModalState(true)} />

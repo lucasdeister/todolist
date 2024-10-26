@@ -1,6 +1,20 @@
-
 .container_botoes_principais{
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
 }
+
+.container_main { grid-area: main; }
+
+.container_main{
+  min-height: 89vh;
+}
+
+/* 
+    Validar nos dispositivos abaixo com a proporção em 100%:
+    -Iphone 12 pro (390px)
+    -Iphone 14 pro max (430px)
+    -Ipad Mini (768px)
+    -Ipad Pro (1024px)
+    -Nest HUB Max (1280px)
+*/
