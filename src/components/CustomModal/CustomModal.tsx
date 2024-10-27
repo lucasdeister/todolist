@@ -146,9 +146,9 @@ const apagarTarefaIndividual = (id_tarefa: number): void => {
 const verificarModal = (): void => {
 
   if(idTarefaApagar > 0)
-    return apagarTarefaIndividual(idTarefaApagar);
+    apagarTarefaIndividual(idTarefaApagar);
   else{
-    return apagarTarefasAFazer();
+    apagarTarefasAFazer();
   }
 }
 

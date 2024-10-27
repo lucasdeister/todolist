@@ -32,8 +32,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     const { recuperarDados } = useContext(ModalContext);
 
     const { setTempo, preencherTempoRestanteNoTitulo,
-            setCronometroAtivo, tempo, formatarTempo, setIdAcao, idAcao
-         } = useContext(CronometroContext);
+            setCronometroAtivo, tempo, formatarTempo} = useContext(CronometroContext);
 
     const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
 
@@ -101,7 +100,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
             desabilitarCampoPrazo();
         }
     }
-
 
     const exibirModalApagarTarefa = (): void => {
         setModalNome("Apagar");
