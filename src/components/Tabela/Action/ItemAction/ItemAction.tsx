@@ -132,14 +132,16 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         setTtarefaEmExecucao(true);
     }
 
-    const atualizarTarefaEmExecucao = (): void => {
+    const verificarTarefaEmExecucao = (): any => {
 
-        const possuiTempoRestante = arrayTarefas[idAcao].tempo_restante !== "00:00:00";
-
-        if(possuiTempoRestante){
-            atualizaTempoRestante(idAcao);
-        }
-    }
+        const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
+    
+            if(tarefaEmExecucao.length > 0){
+              return tarefaEmExecucao[0];
+            }else{
+              return null;
+            }
+      }
 
     useEffect(() => {
         if(tarefaEmExecucao){
@@ -150,9 +152,22 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     }, [tarefaEmExecucao]);
 
 
+    const atualizarTarefaEmExecucao = (id: number): void => {
+
+        const possuiTempoRestante = arrayTarefas[id].tempo_restante !== "00:00:00";
+
+        if(possuiTempoRestante){
+            atualizaTempoRestante(id);
+        }
+    }
+
     useEffect(() => {
         if(tarefaEmExecucao){
-            atualizarTarefaEmExecucao();
+            const tarefa = verificarTarefaEmExecucao();
+            if(tarefa){
+                const id_correspondente = obterIdCorrespondenteArray(tarefa.id);
+                atualizarTarefaEmExecucao(id_correspondente);
+            }
         }
     }, [tempo, tarefaEmExecucao]);
 
@@ -184,7 +199,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const executarOpcao = (): void => {
         const itemIndex = identificarIdCorrespondente();
-        setIdAcao(itemIndex);
         switch (nome) {
             case "Executar":
                 executarTarefa(itemIndex);
