@@ -3,13 +3,13 @@ import style from "./Footer.module.css"
 function Footer() {
   return (
     <footer className={`${style.container_rodape} sticky-bottom`}>
-        <div className={style.descricao}>Design by - Lucas Deister</div>
-        <a className={style.icones} href="https://www.instagram.com/lucasdeister7/" target="_blank" rel="noreferrer">
-          <img src="/icones/icons8-instagram-32.png" alt="instagram" />
-        </a>
-        <a className={style.icones} href="mailto:lucasdeister7@hotmail.com" target="_blank" rel="noreferrer">
-          <img src="/icones/icons8-mensagem-32.png" alt="instagram" />
-        </a>
+      <div className={style.descricao}>Design by - Lucas Deister</div>
+      <a href="https://www.instagram.com/lucasdeister7/" target="_blank" rel="noreferrer">
+        <i id={style.instagram} className={`${style.icones} bi bi-instagram`}></i>
+      </a>
+      <a href="mailto:lucasdeister7@hotmail.com" target="_blank" rel="noreferrer">
+        <i id={style.email} className={`${style.icones} bi bi-envelope`}></i>
+      </a>
     </footer>
   );
 }

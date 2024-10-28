@@ -11,26 +11,23 @@
 
 .container_rodape { grid-area: footer; }
 
-.icones {
-    margin-left: 5px;
-}
-
-.icones:hover {
-    filter: invert(70%);
-}
-
 .descricao {
     font-size: 1.2em;
 }
 
+.icones:hover{
+    filter: invert(70%);
+}
 
-/* 
-    Validar nos dispositivos abaixo com a proporção em 100%:
+.icones{
+    margin-left: 5px;
+    color: black;
+}
 
-    -Iphone 12 pro (390px)
-    -Samsung galaxy S20 (412px)
-    -Iphone 14 pro max (430px)
-    -Ipad Mini (768px)
-    -Ipad Pro (1024px)
-    -Nest HUB Max (1280px)
-*/
+#instagram{
+    font-size: 1.5rem;
+}
+
+#email{
+    font-size: 1.7rem;
+}
