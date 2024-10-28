@@ -2,7 +2,7 @@ import style from "./Footer.module.css"
 
 function Footer() {
   return (
-    <footer className={style.container_rodape}>
+    <footer className={`${style.container_rodape} sticky-bottom`}>
         <div className={style.descricao}>Design by - Lucas Deister</div>
         <a className={style.icones} href="https://www.instagram.com/lucasdeister7/" target="_blank" rel="noreferrer">
           <img src="/icones/icons8-instagram-32.png" alt="instagram" />

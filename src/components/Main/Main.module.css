@@ -17,24 +17,13 @@
   margin-left: auto;
 }
 
-
-
 @media (min-width: 390px) {
-  .container_main {
-    min-height: 87.5vh;
-  }
   .container_botoes_principais {
     flex-wrap: wrap;
   }
   .container_botoes_principais button{
     width: 100px;
     font-size: 1.1rem;
-  }
-}
-
-@media (min-width: 430px) {
-  .container_main {
-    min-height: 83vh;
   }
 }
 
@@ -54,25 +43,11 @@
   .container_botoes_principais button{
     font-size: 1.2rem;
   }
-
-  .container_main {
-    min-height: 76vh;
-  }
-}
-
-@media (min-width: 820px) {
-  .container_main {
-    min-height: 65.6vh;
-  }
 }
 
 @media (min-width: 992px) {
   .container_main {
     max-width: 960px;
-  }
-
-  .container_main {
-    min-height: 56.7vh;
   }
 }
 
@@ -81,24 +56,11 @@
   .container_main {
     max-width: 1140px;
   }
-  .container_main {
-    min-height: 87vh;
-  }
 
 }
 
 @media (min-width: 1400px) {
   .container_main {
     max-width: 1320px;
-    min-height: 89vh;
   }
 }
-
-/* 
-    Validar nos dispositivos abaixo com a proporção em 100%:
-    -Iphone 12 pro (390px)
-    -Iphone 14 pro max (430px)
-    -Ipad Mini (768px)
-    -Ipad Pro (1024px)
-    -Nest HUB Max (1280px)
-*/
