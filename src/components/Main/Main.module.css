@@ -9,7 +9,7 @@
 }
 
 .container_main {
-  min-height: 89vh;
+  height: 86vh;
   width: 100%;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
   padding-left: calc(var(--bs-gutter-x) * 0.5);
