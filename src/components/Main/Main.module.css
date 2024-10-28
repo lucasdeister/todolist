@@ -17,12 +17,17 @@
   margin-left: auto;
 }
 
-@media (min-width: 390px) {
+@media (min-width: 375px) {
   .container_botoes_principais {
     flex-wrap: wrap;
   }
   .container_botoes_principais button{
-    width: 100px;
+    width: 105px;
+  }
+}
+
+@media (min-width: 390px) {
+  .container_botoes_principais button{
     font-size: 1.1rem;
   }
 }
