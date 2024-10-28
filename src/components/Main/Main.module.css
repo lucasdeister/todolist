@@ -82,7 +82,7 @@
     max-width: 1140px;
   }
   .container_main {
-    min-height: 89vh;
+    min-height: 87vh;
   }
 
 }
@@ -90,6 +90,7 @@
 @media (min-width: 1400px) {
   .container_main {
     max-width: 1320px;
+    min-height: 89vh;
   }
 }
 
