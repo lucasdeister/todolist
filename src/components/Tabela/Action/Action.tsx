@@ -1,6 +1,7 @@
 import ItemAction from './ItemAction/ItemAction';
 
 import "./Action.module.css"
+import { useEffect, useState } from 'react';
 
 interface ActionProps {
     id: number;
@@ -43,6 +44,17 @@ const opcoes = [
 
 const Action = ({ status, id, tempo_restante } : ActionProps) => {
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 1000);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const filtrarOpcoesPorStatus = () => {
         return opcoes.filter(opcao => opcao.statusPermitido.includes(status));
     };
@@ -54,8 +66,7 @@ const Action = ({ status, id, tempo_restante } : ActionProps) => {
                 type="button"
                 id="dropdownMenuButton"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >Selecione
+                aria-expanded="false">{isMobile ? <i className="bi bi-list"></i> : 'Selecione'}
             </button>
             <ul className="dropdown-menu">
                 {filtrarOpcoesPorStatus().map((opcao, index) => (

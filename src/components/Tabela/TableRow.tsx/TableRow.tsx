@@ -1,6 +1,6 @@
 import Action from '../Action/Action';
 
-const TableRow = ({ rowData }) => {
+const TableRow = ({ rowData, isMobile }) => {
 
   function converterData(data: string): string {
     const [ano, mes, dia] = data.split('-');
@@ -10,22 +10,23 @@ const TableRow = ({ rowData }) => {
   const data_convertida = converterData(rowData.prazo);
 
   return (
-      <tr>
+    <tr>
         <td>{rowData.id}</td>
         <td>{rowData.nome}</td>
         <td>{rowData.status}</td>
-        <td>{rowData.duracao}</td>
-        <td>{rowData.tempo_restante}</td>
-        <td>{rowData.tempo_decorrido}</td>
-        <td>{data_convertida}</td>
+        {!isMobile && <td>{rowData.duracao}</td>}
+        {!isMobile && <td>{rowData.tempo_restante}</td>}
+        {!isMobile && <td>{rowData.tempo_decorrido}</td>}
+        {!isMobile && <td>{data_convertida}</td>}
         <td>
             <Action
-              status={rowData.status} 
-              id={rowData.id} 
-              tempo_restante={rowData.tempo_restante}/>
+                status={rowData.status}
+                id={rowData.id}
+                tempo_restante={rowData.tempo_restante}
+            />
         </td>
-      </tr>
-  );
+    </tr>
+);
 };
 
 export default TableRow;

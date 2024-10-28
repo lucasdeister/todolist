@@ -17,6 +17,27 @@
   margin-left: auto;
 }
 
+
+
+@media (min-width: 390px) {
+  .container_main {
+    min-height: 87.5vh;
+  }
+  .container_botoes_principais {
+    flex-wrap: wrap;
+  }
+  .container_botoes_principais button{
+    width: 100px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 430px) {
+  .container_main {
+    min-height: 83vh;
+  }
+}
+
 @media (min-width: 576px) {
   .container_main {
     max-width: 540px;
@@ -27,18 +48,43 @@
   .container_main {
     max-width: 720px;
   }
+  .container_botoes_principais{
+    flex-direction: row;
+  }
+  .container_botoes_principais button{
+    font-size: 1.2rem;
+  }
+
+  .container_main {
+    min-height: 76vh;
+  }
+}
+
+@media (min-width: 820px) {
+  .container_main {
+    min-height: 65.6vh;
+  }
 }
 
 @media (min-width: 992px) {
   .container_main {
     max-width: 960px;
   }
+
+  .container_main {
+    min-height: 56.7vh;
+  }
 }
+
 
 @media (min-width: 1200px) {
   .container_main {
     max-width: 1140px;
   }
+  .container_main {
+    min-height: 89vh;
+  }
+
 }
 
 @media (min-width: 1400px) {
@@ -46,9 +92,6 @@
     max-width: 1320px;
   }
 }
-
-
-
 
 /* 
     Validar nos dispositivos abaixo com a proporção em 100%:

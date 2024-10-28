@@ -39,7 +39,7 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
     const handleOnClick = (): void =>{
 
         switch(texto) {
-            case "Criar Tarefa":
+            case "Criar":
                 exibirModalCriacao();
                 break;
             case "Importar":
@@ -60,7 +60,7 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
         <>
             <button 
                 className={`btn btn-outline-${classe}
-                btn-lg me-3 mb-3 text-dark`}
+                me-3 mb-3 text-dark`}
                 onClick={handleOnClick}>{texto}
             </button>
         </>

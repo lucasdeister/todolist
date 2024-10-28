@@ -10,13 +10,24 @@ import Cronometro from "../Cronometro/Cronometro";
 import { ModalContext } from "../../context/ModalContext";
 import { CronometroContext } from "../../context/CronometroContext";
 
-import { useContext, useEffect } from "react";
-
-const columns = ["Id", "Nome", "Status", "Duração",
-                 "Tempo restante", "Tempo decorrido",
-                  "Realizar até", "Ações"]
+import { useContext, useEffect, useState } from "react";
 
 function Main() {
+
+  const columnsDesktop = ["Id", "Nome", "Status", "Duração",
+    "Tempo restante", "Tempo decorrido", "Realizar até", "Ações"];
+  const columnsMobile = ["Id", "Nome", "Status", "Ações"];
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const columns = isMobile ? columnsMobile : columnsDesktop;
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
   const { recuperarDados, arrayTarefas, modalState, setModalState, modalNome } = useContext(ModalContext);
   const { tempo, setTempo, ativo, formatarTempo } = useContext(CronometroContext);
@@ -74,19 +85,19 @@ function Main() {
     <main className={style.container_main}>
       <hr className="m-5" />
       <div className={style.container_botoes_principais}>
-        <BotaoPrincipal texto={"Criar Tarefa"} classe="success" handleShow={() => setModalState(true)} />
-        <CustomModal
-          nome_modal={modalNome + " Tarefa"}
-          atualizarGrid={recuperarDados}
-          handleClose={() => setModalState(false)}
-          show={modalState}/>
+        <BotaoPrincipal texto="Criar" classe="success" handleShow={() => setModalState(true)} />
         <BotaoPrincipal texto="Importar" classe="info" />
         <BotaoPrincipal texto="Exportar" classe="secondary" />
         <BotaoPrincipal texto="Relatório" classe="warning" />
         <BotaoPrincipal texto="Apagar" classe="danger" handleShow={() => setModalState(true)} />
       </div>
+      <CustomModal
+          nome_modal={modalNome + " Tarefa"}
+          atualizarGrid={recuperarDados}
+          handleClose={() => setModalState(false)}
+          show={modalState}/>
         <Cronometro tempo={tempo} setTempo={setTempo} ativo={ativo} formatarTempo={formatarTempo}/>
-        <Tabela columns={columns} data={arrayTarefas} />
+        <Tabela columns={columns} data={arrayTarefas} isMobile={isMobile} />
     </main>
   )
 }
