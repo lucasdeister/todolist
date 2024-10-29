@@ -1,34 +1,40 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import styles from "./Cronometro.module.css"
 
 interface CronometroProps {
-  tempo: number;
+  tempoRestante: number;
+  tempoDecorrido: number;
   cronometroAtivo: boolean;
-  setTempo: (tempo: number) => void;
+  setTempoRestante: (tempo: number) => void;
+  setTempoDecorrido: (tempo: number) => void;
   formatarTempo: (segundosTotais: number) => string;
 }
 
-  function Cronometro( { tempo, setTempo, cronometroAtivo, formatarTempo }: CronometroProps) {
+  function Cronometro( { tempoRestante, setTempoRestante,
+     cronometroAtivo, formatarTempo, tempoDecorrido, setTempoDecorrido }: CronometroProps) {
 
   useEffect(() => {
 
     let intervalo: NodeJS.Timeout;
     
-    if(cronometroAtivo && tempo > 0) {
+    if(cronometroAtivo) {
       intervalo = setInterval(() => {
-        setTempo(tempo - 1);
+        setTempoDecorrido(tempoDecorrido + 1);
+        if(tempoRestante > 0)
+        setTempoRestante(tempoRestante - 1);
       }, 1000);
-    } else if (tempo === 0) {
+    } else{
       clearInterval(intervalo);
     }
 
     return () => clearInterval(intervalo); 
-  }, [cronometroAtivo, tempo]);
+  }, [cronometroAtivo, tempoRestante, setTempoRestante, tempoDecorrido, setTempoDecorrido]);
+
 
   return (
     <div>
-      <h3 className={styles.tempo}>{formatarTempo(tempo)}</h3>
+      <h3 className={styles.tempo}>{formatarTempo(tempoRestante)}</h3>
     </div>
   );
 };

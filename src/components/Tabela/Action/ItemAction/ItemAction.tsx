@@ -31,8 +31,9 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { recuperarDados, obterIdCorrespondente } = useContext(UtilContext);
 
-    const { setTempo, preencherTempoRestanteNoTitulo,
-            setCronometroAtivo, tempo, formatarTempo} = useContext(CronometroContext);
+    const { setTempoRestante, preencherTempoRestanteNoTitulo,
+            setCronometroAtivo, tempoRestante, formatarTempo,
+            tempoDecorrido, setTempoDecorrido} = useContext(CronometroContext);
 
     const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
 
@@ -107,16 +108,19 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
       }
     
       const atualizaTempoRestante = (id: number): void => {
-        arrayTarefas[id].tempo_restante = formatarTempo(tempo);
-        localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
-        recuperarDados();
+        arrayTarefas[id].tempo_restante = formatarTempo(tempoRestante);
+    };
+
+    const atualizaTempoDecorrido = (id: number): void => {
+        arrayTarefas[id].tempo_decorrido = formatarTempo(tempoDecorrido);
     };
 
     const executarTarefa = (id: number): void => {
+        // setTempoDecorrido(0);
         preencherTempoRestanteNoTitulo(tempo_restante);
         setCronometroAtivo(true);
-        colocarTarefaEmExecucao(id);
         setTtarefaEmExecucao(true);
+        colocarTarefaEmExecucao(id);
     }
 
     const verificarTarefaEmExecucao = (): any => {
@@ -140,12 +144,12 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
 
     const atualizarTarefaEmExecucao = (id: number): void => {
-
         const possuiTempoRestante = arrayTarefas[id].tempo_restante !== "00:00:00";
 
         if(possuiTempoRestante){
             atualizaTempoRestante(id);
         }
+        atualizaTempoDecorrido(id);
     }
 
     useEffect(() => {
@@ -154,9 +158,11 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
             if(tarefa){
                 const id_correspondente = obterIdCorrespondente(tarefa.id);
                 atualizarTarefaEmExecucao(id_correspondente);
+                localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
+                recuperarDados();
             }
         }
-    }, [tempo, tarefaEmExecucao]);
+    }, [tempoRestante, tarefaEmExecucao, tempoDecorrido]);
 
     const pausarTarefa = (id: number): void => {
         setCronometroAtivo(false);
@@ -172,7 +178,8 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         arrayTarefas[id].status = "Concluída";
         arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
-        setTempo(0);
+        setTempoRestante(0);
+        setTempoDecorrido(0);
     }
 
     const cancelarTarefa = (id: number): void => {
@@ -181,7 +188,8 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         arrayTarefas[id].status = "Cancelada";
         arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
-        setTempo(0);
+        setTempoRestante(0);
+        setTempoDecorrido(0);
     }
 
     const executarOpcao = (): void => {

@@ -1,17 +1,15 @@
+import { useContext, useEffect, useState } from "react";
+
 import style from "./Main.module.css"
 
 import BotaoPrincipal from "../BotaoPrincipal/BotaoPrincipal";
-
 import Tabela from "../Tabela/Tabela";
 import CustomModal from "../CustomModal/CustomModal";
-
 import Cronometro from "../Cronometro/Cronometro";
 
 import { ModalContext } from "../../context/ModalContext";
 import { CronometroContext } from "../../context/CronometroContext";
 import { UtilContext } from "../../context/UtilContext";
-
-import { useContext, useEffect, useState } from "react";
 
 function Main() {
 
@@ -32,7 +30,9 @@ function Main() {
 
   const { modalState, setModalState, modalNome } = useContext(ModalContext);
   const { recuperarDados, arrayTarefas, setTtarefaEmExecucao } = useContext(UtilContext);
-  const { tempo, setTempo, cronometroAtivo, formatarTempo } = useContext(CronometroContext);
+  const { tempoRestante, setTempoRestante, cronometroAtivo,
+          formatarTempo, tempoDecorrido, setTempoDecorrido
+        } = useContext(CronometroContext);
   const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(UtilContext);
   const { setCronometroAtivo } = useContext(CronometroContext);
   const { preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
@@ -87,7 +87,13 @@ function Main() {
           atualizarGrid={recuperarDados}
           handleClose={() => setModalState(false)}
           show={modalState}/>
-        <Cronometro tempo={tempo} setTempo={setTempo} cronometroAtivo={cronometroAtivo} formatarTempo={formatarTempo}/>
+        <Cronometro
+            tempoRestante={tempoRestante}
+            setTempoRestante={setTempoRestante}
+            tempoDecorrido={tempoDecorrido}
+            setTempoDecorrido={setTempoDecorrido}
+            cronometroAtivo={cronometroAtivo}
+            formatarTempo={formatarTempo}/>
         <Tabela columns={columns} data={arrayTarefas} isMobile={isMobile} />
     </main>
   )

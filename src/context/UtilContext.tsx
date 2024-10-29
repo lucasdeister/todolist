@@ -7,6 +7,7 @@ interface Tarefa {
   status: string;
   duracao: string;
   tempo_restante: string;
+  tempo_decorrido: string;
   observacoes: string;
 }
 
