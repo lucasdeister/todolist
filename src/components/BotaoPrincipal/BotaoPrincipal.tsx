@@ -11,7 +11,7 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
 
     const { setModalNome, limparStates, habilitarCamposForm, setCampoPrazo } = useContext(ModalContext);
 
-    const { setDescricaoModalApagar, setIdTarefaApagar } = useContext(ModalContext);
+    const { setDescricaoModalApagar, setIdTarefaSelecionada } = useContext(ModalContext);
 
     const exibirModalCriacao = () => {
         handleShow();
@@ -33,7 +33,7 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
     const exibirModalApagar = () => {
         handleShow();
         setModalNome("Apagar");
-        setIdTarefaApagar(0);
+        setIdTarefaSelecionada(0);
     }
 
     const handleOnClick = (): void =>{

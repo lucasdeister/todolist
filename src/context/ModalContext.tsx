@@ -21,11 +21,10 @@ interface ModalContextProps {
   campo_nome_disabled: boolean;
   campo_duracao_disabled: boolean;
   campo_prazo_disabled: boolean;
-  idTarefaEditada: number;
+  idTarefaSelecionada: number;
   tituloToast: string;
   descricaoToast: string;
   descricaoModalApagar: string;
-  idTarefaApagar: number;
   verificouTarefaExecutando: boolean;
   setCampoNome: (campo_nome: string) => void;
   setCampoDuracao: (campo_duracao: string) => void;
@@ -39,11 +38,10 @@ interface ModalContextProps {
   setCampoDuracaoDisabled: (campo_duracao_disabled: boolean) => void;
   setCampoPrazoDisabled: (campo_prazo_disabled: boolean) => void;
   habilitarCamposForm: () => void;
-  setIdTarefaEditada: (id_tarefa: number) => void;
+  setIdTarefaSelecionada: (id_tarefa: number) => void;
   setTituloToast: (titulo_toast: string) => void;
   setDescricaoToast: (descricao_toast: string) => void;
   setDescricaoModalApagar: (descricao_modal_apagar: string) => void;
-  setIdTarefaApagar: (id_tarefa_apagar: number) => void;
   setVerificouTarefaExecutando: (tarefa_executando: boolean) => void;
 }
 
@@ -68,14 +66,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [campo_duracao_disabled, setCampoDuracaoDisabled] = useState<boolean>(false);
   const [campo_prazo_disabled, setCampoPrazoDisabled] = useState<boolean>(false);
 
-  const [idTarefaEditada, setIdTarefaEditada] = useState<number>(0);
+  const [idTarefaSelecionada, setIdTarefaSelecionada] = useState<number>(0);
 
   const [tituloToast, setTituloToast] = useState<string>("");
   const [descricaoToast, setDescricaoToast] = useState<string>("");
 
   const [descricaoModalApagar, setDescricaoModalApagar] = useState<string>('');
-
-  const [idTarefaApagar, setIdTarefaApagar] = useState<number>(0);
 
   // Estado para armazenar as tarefas
   const [arrayTarefas, setArrayTarefas] = useState<Tarefa[]>([]);
@@ -116,9 +112,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
        campo_nome, campo_duracao, campo_observacoes, campo_prazo, setCampoNome, setCampoDuracao,
        setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled, campo_duracao_disabled,
        setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled, habilitarCamposForm,
-       idTarefaEditada, setIdTarefaEditada, tituloToast, descricaoToast, setTituloToast, setDescricaoToast,
-       descricaoModalApagar, setDescricaoModalApagar, idTarefaApagar, setIdTarefaApagar,
-       setVerificouTarefaExecutando, verificouTarefaExecutando}}>
+       idTarefaSelecionada, setIdTarefaSelecionada, tituloToast, descricaoToast, setTituloToast,
+       setDescricaoToast, descricaoModalApagar, setDescricaoModalApagar, setVerificouTarefaExecutando,
+       verificouTarefaExecutando}}>
         {children}
     </ModalContext.Provider>
   );

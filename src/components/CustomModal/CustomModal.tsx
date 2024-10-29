@@ -24,10 +24,9 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   const { campo_duracao_disabled, setCampoDuracaoDisabled } = useContext(ModalContext);
   const { campo_prazo_disabled ,setCampoPrazoDisabled } = useContext(ModalContext);
   const { limparStates } = useContext(ModalContext);
-  const { idTarefaEditada } = useContext(ModalContext);
+  const { idTarefaSelecionada } = useContext(ModalContext);
   const { arrayTarefas } = useContext(ModalContext);
   const { descricaoModalApagar } = useContext(ModalContext);
-  const { idTarefaApagar } = useContext(ModalContext);
   
   const { setTituloToast, setDescricaoToast, tituloToast, descricaoToast } = useContext(ModalContext);
 
@@ -101,13 +100,13 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
 
   };
 
-  const identificarIdCorrespondente = (): number => {
-    return arrayTarefas.findIndex((item: any) => item.id === idTarefaEditada);
+  const identificarIdCorrespondente = (id: number): number => {
+    return arrayTarefas.findIndex((item: any) => item.id === id);
   }
 
   const editarTarefa = (): void =>{
 
-    const itemIndex = identificarIdCorrespondente();
+    const itemIndex = identificarIdCorrespondente(idTarefaSelecionada);
 
     arrayTarefas[itemIndex].nome = campo_nome;
     arrayTarefas[itemIndex].duracao = campo_duracao;
@@ -145,8 +144,8 @@ const apagarTarefaIndividual = (id_tarefa: number): void => {
 
 const verificarModal = (): void => {
 
-  if(idTarefaApagar > 0)
-    apagarTarefaIndividual(idTarefaApagar);
+  if(idTarefaSelecionada > 0)
+    apagarTarefaIndividual(idTarefaSelecionada);
   else{
     apagarTarefasAFazer();
   }

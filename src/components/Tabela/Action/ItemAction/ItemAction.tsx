@@ -23,11 +23,9 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { habilitarCamposForm } = useContext(ModalContext);
 
-    const { setIdTarefaEditada } = useContext(ModalContext);
+    const { setIdTarefaSelecionada } = useContext(ModalContext);
 
     const { setDescricaoModalApagar } = useContext(ModalContext);
-    
-    const { setIdTarefaApagar } = useContext(ModalContext);
 
     const { recuperarDados } = useContext(ModalContext);
 
@@ -46,7 +44,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     const idTarefaArray = obterIdCorrespondenteArray(id);
 
     const exibirModalEdicao = (): void => {
-        setIdTarefaEditada(id);
+        setIdTarefaSelecionada(id);
         const tarefaIniciada = arrayTarefas[idTarefaArray].status !== "A fazer";
 
         if (tarefaIniciada) {
@@ -105,7 +103,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         setModalNome("Apagar");
         setModalState(true);
         setDescricaoModalApagar("da tarefa?");
-        setIdTarefaApagar(id);
+        setIdTarefaSelecionada(id);
     }
     
     const identificarIdCorrespondente = (): number => {
