@@ -70,7 +70,6 @@ function Main() {
     if(verificouTarefaExecutando && arrayTarefas.length > 0){
       const tarefa = verificarTarefaEmExecucao();
       if(tarefa){
-        const id_tarefa_array = identificarIdCorrespondente(tarefa.id)
         continuarTarefaEmExecucao(tarefa);
       }
     }
