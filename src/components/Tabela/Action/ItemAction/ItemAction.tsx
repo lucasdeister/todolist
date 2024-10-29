@@ -29,21 +29,14 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { setDescricaoModalApagar } = useContext(ModalContext);
 
-    const { recuperarDados } = useContext(UtilContext);
+    const { recuperarDados, obterIdCorrespondente } = useContext(UtilContext);
 
     const { setTempo, preencherTempoRestanteNoTitulo,
             setCronometroAtivo, tempo, formatarTempo} = useContext(CronometroContext);
 
     const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
 
-    const obterIdCorrespondenteArray = (idTarefa: number): number => {
-
-        const idArray = (tarefaArray: { id: number; }) => tarefaArray.id === idTarefa
-
-        return arrayTarefas.findIndex(idArray);
-    }
-
-    const idTarefaArray = obterIdCorrespondenteArray(id);
+    const idTarefaArray = obterIdCorrespondente(id);
 
     const exibirModalEdicao = (): void => {
         setIdTarefaSelecionada(id);
@@ -108,10 +101,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         setIdTarefaSelecionada(id);
     }
     
-    const identificarIdCorrespondente = (): number => {
-        return arrayTarefas.findIndex((item: any) => item.id === id);
-      }
-
     const colocarTarefaEmExecucao = (id: number): void =>{
         arrayTarefas[id].status = "Executando";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
@@ -163,7 +152,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         if(tarefaEmExecucao){
             const tarefa = verificarTarefaEmExecucao();
             if(tarefa){
-                const id_correspondente = obterIdCorrespondenteArray(tarefa.id);
+                const id_correspondente = obterIdCorrespondente(tarefa.id);
                 atualizarTarefaEmExecucao(id_correspondente);
             }
         }
@@ -196,7 +185,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
     }
 
     const executarOpcao = (): void => {
-        const itemIndex = identificarIdCorrespondente();
+        const itemIndex = obterIdCorrespondente(id);
         switch (nome) {
             case "Executar":
                 executarTarefa(itemIndex);

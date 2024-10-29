@@ -23,6 +23,7 @@ interface UtilContextProps {
   setTituloToast: (titulo_toast: string) => void;
   setDescricaoToast: (descricao_toast: string) => void;
   setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
+  obterIdCorrespondente: (id: number) => number;
 }
 
 // Criando o contexto com tipo adequado
@@ -61,12 +62,16 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
     }
   };
 
+  const obterIdCorrespondente = (id: number): number => {
+    return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
+  }
+
   return (
     <UtilContext.Provider value={{
        recuperarDados, arrayTarefas, idTarefaSelecionada,
         setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
         tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-        setTtarefaEmExecucao}}>
+        setTtarefaEmExecucao, obterIdCorrespondente}}>
         {children}
     </UtilContext.Provider>
   );

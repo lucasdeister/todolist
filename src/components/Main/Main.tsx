@@ -61,10 +61,6 @@ function Main() {
   }, [setVerificouTarefaExecutando]);
 
 
-  const identificarIdCorrespondente = (id: number): number => {
-    return arrayTarefas.findIndex((item: any) => item.id === id);
-  }
-
   useEffect(() => {
 
     if(verificouTarefaExecutando && arrayTarefas.length > 0){
@@ -74,9 +70,7 @@ function Main() {
       }
     }
 
-  }, [verificouTarefaExecutando,
-     continuarTarefaEmExecucao, identificarIdCorrespondente,
-     verificarTarefaEmExecucao, arrayTarefas]);
+  }, [verificouTarefaExecutando,continuarTarefaEmExecucao,verificarTarefaEmExecucao, arrayTarefas]);
 
   return (
     <main className={style.container_main}>
