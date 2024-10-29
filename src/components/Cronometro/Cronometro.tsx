@@ -4,18 +4,18 @@ import styles from "./Cronometro.module.css"
 
 interface CronometroProps {
   tempo: number;
-  ativo: boolean;
+  cronometroAtivo: boolean;
   setTempo: (tempo: number) => void;
   formatarTempo: (segundosTotais: number) => string;
 }
 
-  function Cronometro( { tempo, setTempo, ativo, formatarTempo }: CronometroProps) {
+  function Cronometro( { tempo, setTempo, cronometroAtivo, formatarTempo }: CronometroProps) {
 
   useEffect(() => {
 
     let intervalo: NodeJS.Timeout;
     
-    if(ativo && tempo > 0) {
+    if(cronometroAtivo && tempo > 0) {
       intervalo = setInterval(() => {
         setTempo(tempo - 1);
       }, 1000);
@@ -24,7 +24,7 @@ interface CronometroProps {
     }
 
     return () => clearInterval(intervalo); 
-  }, [ativo, tempo]);
+  }, [cronometroAtivo, tempo]);
 
   return (
     <div>

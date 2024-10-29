@@ -4,6 +4,7 @@ import ContentModalTarefas from '../ContentModal/ContentModalTarefas/ContentModa
 import ContentModalApagar from '../ContentModal/ContentModalApagar/ContentModalApagar';
 
 import { ModalContext } from "../../context/ModalContext";
+import { UtilContext } from '../../context/UtilContext';
 
 import { useContext } from "react";
 
@@ -24,11 +25,10 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   const { campo_duracao_disabled, setCampoDuracaoDisabled } = useContext(ModalContext);
   const { campo_prazo_disabled ,setCampoPrazoDisabled } = useContext(ModalContext);
   const { limparStates } = useContext(ModalContext);
-  const { idTarefaSelecionada } = useContext(ModalContext);
-  const { arrayTarefas } = useContext(ModalContext);
+  const { idTarefaSelecionada } = useContext(UtilContext);
+  const { arrayTarefas } = useContext(UtilContext);
   const { descricaoModalApagar } = useContext(ModalContext);
-  
-  const { setTituloToast, setDescricaoToast, tituloToast, descricaoToast } = useContext(ModalContext);
+  const { setTituloToast, setDescricaoToast, tituloToast, descricaoToast } = useContext(UtilContext);
 
   const [toast, setToast] = useState(false);
   const exibirToast = (): void => setToast(!toast);

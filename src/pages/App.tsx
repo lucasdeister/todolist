@@ -4,17 +4,20 @@ import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
 import { ModalProvider } from '../context/ModalContext';
 import { CronometroProvider } from '../context/CronometroContext';
+import { UtilProvider } from '../context/UtilContext';
 import style from "./App.module.css"
 
 function App() {
   return (
     <div className={style.grid_container}>
       <Header/>
-      <ModalProvider>
-        <CronometroProvider>
-          <Main/>
-        </CronometroProvider>
-      </ModalProvider>
+      <UtilProvider>
+        <ModalProvider>
+          <CronometroProvider>
+            <Main/>
+          </CronometroProvider>
+        </ModalProvider>
+      </UtilProvider>
       <Footer/>
     </div>
   );

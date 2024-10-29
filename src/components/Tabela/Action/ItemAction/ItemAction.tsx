@@ -3,6 +3,7 @@
 import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../../context/ModalContext";
 import { CronometroContext } from "../../../../context/CronometroContext";
+import { UtilContext } from "../../../../context/UtilContext";
 
 interface ItemActionProps {
     nome: string;
@@ -13,9 +14,10 @@ interface ItemActionProps {
 
 function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
-    const { tarefaEmExecucao, setTtarefaEmExecucao } = useContext(CronometroContext);
+    const { tarefaEmExecucao, setTtarefaEmExecucao } = useContext(UtilContext);
 
-    const { setModalState, arrayTarefas, setModalNome } = useContext(ModalContext);
+    const { setModalState, setModalNome } = useContext(ModalContext);
+    const { arrayTarefas } = useContext(UtilContext);
 
     const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes } = useContext(ModalContext);
 
@@ -23,11 +25,11 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { habilitarCamposForm } = useContext(ModalContext);
 
-    const { setIdTarefaSelecionada } = useContext(ModalContext);
+    const { setIdTarefaSelecionada } = useContext(UtilContext);
 
     const { setDescricaoModalApagar } = useContext(ModalContext);
 
-    const { recuperarDados } = useContext(ModalContext);
+    const { recuperarDados } = useContext(UtilContext);
 
     const { setTempo, preencherTempoRestanteNoTitulo,
             setCronometroAtivo, tempo, formatarTempo} = useContext(CronometroContext);

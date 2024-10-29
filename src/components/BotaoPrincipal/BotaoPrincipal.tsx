@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
+import { UtilContext } from "../../context/UtilContext";
 
 interface BotaoPrincipalProps {
     texto: string;
@@ -9,9 +10,10 @@ interface BotaoPrincipalProps {
   
 function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
 
-    const { setModalNome, limparStates, habilitarCamposForm, setCampoPrazo } = useContext(ModalContext);
+    const { setModalNome, limparStates, habilitarCamposForm,
+         setCampoPrazo, setDescricaoModalApagar } = useContext(ModalContext);
 
-    const { setDescricaoModalApagar, setIdTarefaSelecionada } = useContext(ModalContext);
+    const { setIdTarefaSelecionada } = useContext(UtilContext);
 
     const exibirModalCriacao = () => {
         handleShow();

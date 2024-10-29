@@ -1,19 +1,8 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 
-interface Tarefa {
-  id: number;
-  nome: string;
-  prazo: string;
-  status: string;
-  duracao: string;
-  tempo_restante: string;
-  observacoes: string;
-}
-
 interface ModalContextProps {
   modalState: boolean;
   modalNome: string;
-  arrayTarefas: Tarefa[];
   campo_nome: string;
   campo_duracao: string;
   campo_prazo: string;
@@ -21,28 +10,19 @@ interface ModalContextProps {
   campo_nome_disabled: boolean;
   campo_duracao_disabled: boolean;
   campo_prazo_disabled: boolean;
-  idTarefaSelecionada: number;
-  tituloToast: string;
-  descricaoToast: string;
   descricaoModalApagar: string;
-  verificouTarefaExecutando: boolean;
   setCampoNome: (campo_nome: string) => void;
   setCampoDuracao: (campo_duracao: string) => void;
   setCampoPrazo: (campo_prazo: string) => void;
   setCampoObservacoes: (campo_observacoes: string) => void;
   setModalState: (state: boolean) => void;
-  recuperarDados: () => void;
   setModalNome: (state: string) => void;
   limparStates: () => void;
   setCampoNomeDisabled: (campo_nome_disabled: boolean) => void;
   setCampoDuracaoDisabled: (campo_duracao_disabled: boolean) => void;
   setCampoPrazoDisabled: (campo_prazo_disabled: boolean) => void;
   habilitarCamposForm: () => void;
-  setIdTarefaSelecionada: (id_tarefa: number) => void;
-  setTituloToast: (titulo_toast: string) => void;
-  setDescricaoToast: (descricao_toast: string) => void;
   setDescricaoModalApagar: (descricao_modal_apagar: string) => void;
-  setVerificouTarefaExecutando: (tarefa_executando: boolean) => void;
 }
 
 // Criando o contexto com tipo adequado
@@ -66,31 +46,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [campo_duracao_disabled, setCampoDuracaoDisabled] = useState<boolean>(false);
   const [campo_prazo_disabled, setCampoPrazoDisabled] = useState<boolean>(false);
 
-  const [idTarefaSelecionada, setIdTarefaSelecionada] = useState<number>(0);
-
-  const [tituloToast, setTituloToast] = useState<string>("");
-  const [descricaoToast, setDescricaoToast] = useState<string>("");
-
   const [descricaoModalApagar, setDescricaoModalApagar] = useState<string>('');
-
-  // Estado para armazenar as tarefas
-  const [arrayTarefas, setArrayTarefas] = useState<Tarefa[]>([]);
-
-  const [verificouTarefaExecutando, setVerificouTarefaExecutando] = useState<boolean>(false);
-
-  // Função para recuperar dados do localStorage
-  const recuperarDados = () => {
-    const dadosArmazenados = localStorage.getItem("tarefas");
-
-    if (dadosArmazenados) {
-      try {
-        const arrayDeObjetosTarefas: Tarefa[] = JSON.parse(dadosArmazenados);
-        setArrayTarefas(arrayDeObjetosTarefas);
-      } catch (erro) {
-        console.error("Erro ao parsear os dados do localStorage", erro);
-      }
-    }
-  };
 
   const habilitarCamposForm = (): void => {
     setCampoNomeDisabled(false);
@@ -108,13 +64,11 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
 
   return (
     <ModalContext.Provider value={{
-       modalState, setModalState, recuperarDados, limparStates, arrayTarefas, modalNome, setModalNome,
+       modalState, setModalState, limparStates, modalNome, setModalNome,
        campo_nome, campo_duracao, campo_observacoes, campo_prazo, setCampoNome, setCampoDuracao,
-       setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled, campo_duracao_disabled,
-       setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled, habilitarCamposForm,
-       idTarefaSelecionada, setIdTarefaSelecionada, tituloToast, descricaoToast, setTituloToast,
-       setDescricaoToast, descricaoModalApagar, setDescricaoModalApagar, setVerificouTarefaExecutando,
-       verificouTarefaExecutando}}>
+       setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled,
+       campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled,
+       habilitarCamposForm, descricaoModalApagar, setDescricaoModalApagar}}>
         {children}
     </ModalContext.Provider>
   );

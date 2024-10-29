@@ -9,6 +9,7 @@ import Cronometro from "../Cronometro/Cronometro";
 
 import { ModalContext } from "../../context/ModalContext";
 import { CronometroContext } from "../../context/CronometroContext";
+import { UtilContext } from "../../context/UtilContext";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -29,14 +30,12 @@ function Main() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-  const { recuperarDados, arrayTarefas, modalState, setModalState, modalNome } = useContext(ModalContext);
-  const { tempo, setTempo, ativo, formatarTempo } = useContext(CronometroContext);
-
-  const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(ModalContext);
-
+  const { modalState, setModalState, modalNome } = useContext(ModalContext);
+  const { recuperarDados, arrayTarefas, setTtarefaEmExecucao } = useContext(UtilContext);
+  const { tempo, setTempo, cronometroAtivo, formatarTempo } = useContext(CronometroContext);
+  const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(UtilContext);
   const { setCronometroAtivo, setIdAcao } = useContext(CronometroContext);
-
-  const { setTtarefaEmExecucao, preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
+  const { preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
 
   const verificarTarefaEmExecucao = (): any => {
 
@@ -96,7 +95,7 @@ function Main() {
           atualizarGrid={recuperarDados}
           handleClose={() => setModalState(false)}
           show={modalState}/>
-        <Cronometro tempo={tempo} setTempo={setTempo} ativo={ativo} formatarTempo={formatarTempo}/>
+        <Cronometro tempo={tempo} setTempo={setTempo} cronometroAtivo={cronometroAtivo} formatarTempo={formatarTempo}/>
         <Tabela columns={columns} data={arrayTarefas} isMobile={isMobile} />
     </main>
   )
