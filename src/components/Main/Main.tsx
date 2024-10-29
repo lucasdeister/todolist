@@ -34,7 +34,7 @@ function Main() {
   const { recuperarDados, arrayTarefas, setTtarefaEmExecucao } = useContext(UtilContext);
   const { tempo, setTempo, cronometroAtivo, formatarTempo } = useContext(CronometroContext);
   const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(UtilContext);
-  const { setCronometroAtivo, setIdAcao } = useContext(CronometroContext);
+  const { setCronometroAtivo } = useContext(CronometroContext);
   const { preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
 
   const verificarTarefaEmExecucao = (): any => {
@@ -71,14 +71,13 @@ function Main() {
       const tarefa = verificarTarefaEmExecucao();
       if(tarefa){
         const id_tarefa_array = identificarIdCorrespondente(tarefa.id)
-        setIdAcao(id_tarefa_array);
         continuarTarefaEmExecucao(tarefa);
       }
     }
 
   }, [verificouTarefaExecutando,
      continuarTarefaEmExecucao, identificarIdCorrespondente,
-     verificarTarefaEmExecucao, setIdAcao, arrayTarefas]);
+     verificarTarefaEmExecucao, arrayTarefas]);
 
   return (
     <main className={style.container_main}>

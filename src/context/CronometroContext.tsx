@@ -3,14 +3,12 @@ import { createContext, useContext, ReactNode, useState } from "react";
 interface CronometroContextProps {
   tempo: number;
   cronometroAtivo: boolean;
-  idAcao: number;
   botaoExecutarDesativado: boolean;
   setTempo: (tempo: number) => void;
   converterTempoParaSegundos: (tempo: string) => number;
   setCronometroAtivo: (status_cronometro: boolean) => void;
   formatarTempo: (segundosTotais: number) => string;
   preencherTempoRestanteNoTitulo: (tempo_restante: string) => void;
-  setIdAcao: (id: number) => void;
   setBotaoExecutarDesativado: (status_botao: boolean) => void;
 }
 
@@ -25,8 +23,6 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   const [tempo, setTempo] = useState<number>(0);
   
   const [cronometroAtivo, setCronometroAtivo] = useState<boolean>(false);
-
-  const [idAcao, setIdAcao] = useState<number>(0);
 
   const [botaoExecutarDesativado, setBotaoExecutarDesativado] = useState<boolean>(false);
 
@@ -56,7 +52,7 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   return (
     <CronometroContext.Provider value={{ tempo, setTempo, converterTempoParaSegundos,
       cronometroAtivo, setCronometroAtivo, formatarTempo, preencherTempoRestanteNoTitulo,
-      idAcao, setIdAcao, botaoExecutarDesativado, setBotaoExecutarDesativado}}>
+      botaoExecutarDesativado, setBotaoExecutarDesativado}}>
       {children}
     </CronometroContext.Provider>
   );
