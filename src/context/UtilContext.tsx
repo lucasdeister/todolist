@@ -63,10 +63,6 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
     }
   }, []);
 
-  // const obterIdCorrespondente = useCallback((id: number): number => {
-  //   return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
-  // }, []);
-
   const obterIdCorrespondente = (id: number): number => {
     return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
   }
