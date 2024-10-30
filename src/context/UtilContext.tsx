@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode, useCallback } from "react";
 
 interface Tarefa {
   id: number;
@@ -50,7 +50,7 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
   const [verificouTarefaExecutando, setVerificouTarefaExecutando] = useState<boolean>(false);
 
   // Função para recuperar dados do localStorage
-  const recuperarDados = () => {
+  const recuperarDados = useCallback((): void => {
     const dadosArmazenados = localStorage.getItem("tarefas");
 
     if (dadosArmazenados) {
@@ -61,7 +61,7 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
         console.error("Erro ao parsear os dados do localStorage", erro);
       }
     }
-  };
+  },[]);
 
   const obterIdCorrespondente = (id: number): number => {
     return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);

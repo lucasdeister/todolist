@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import style from "./Main.module.css"
 
@@ -37,41 +37,36 @@ function Main() {
   const { setCronometroAtivo } = useContext(CronometroContext);
   const { preencherTempoRestante, preencherTempoDecorrido } = useContext(CronometroContext);
 
-  const verificarTarefaEmExecucao = (): any => {
-
-    const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
-
-        if(tarefaEmExecucao.length > 0){
-          return tarefaEmExecucao[0];
-        }else{
-          return null;
-        }
-  }
-
-  const continuarTarefaEmExecucao = (tarefa: any): void => {
-      preencherTempoRestante(tarefa.tempo_restante);
-      preencherTempoDecorrido(tarefa.tempo_decorrido);
-      setCronometroAtivo(true);
-      setTtarefaEmExecucao(true);
-      setVerificouTarefaExecutando(false);
-  }
+  const continuarTarefaEmExecucao = useCallback((tarefa: any): void => {
+    preencherTempoRestante(tarefa.tempo_restante);
+    preencherTempoDecorrido(tarefa.tempo_decorrido);
+    setCronometroAtivo(true);
+    setTtarefaEmExecucao(true);
+    setVerificouTarefaExecutando(false);
+}, [preencherTempoRestante, preencherTempoDecorrido,
+   setCronometroAtivo, setTtarefaEmExecucao, setVerificouTarefaExecutando]);
 
   useEffect(() => {
     recuperarDados();
     setVerificouTarefaExecutando(true);
-  }, [setVerificouTarefaExecutando]);
+  }, [setVerificouTarefaExecutando, recuperarDados]);
 
 
-  useEffect(() => {
+useEffect(() => {
+  
+  const verificarTarefaEmExecucao = () => {
+      const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
 
-    if(verificouTarefaExecutando && arrayTarefas.length > 0){
+      return tarefaEmExecucao.length > 0 ? tarefaEmExecucao[0] : null;
+  };
+
+  if (verificouTarefaExecutando && arrayTarefas.length > 0) {
       const tarefa = verificarTarefaEmExecucao();
-      if(tarefa){
-        continuarTarefaEmExecucao(tarefa);
+      if (tarefa) {
+          continuarTarefaEmExecucao(tarefa);
       }
-    }
-
-  }, [verificouTarefaExecutando,continuarTarefaEmExecucao,verificarTarefaEmExecucao, arrayTarefas]);
+  }
+}, [verificouTarefaExecutando, continuarTarefaEmExecucao, arrayTarefas]);
 
   return (
     <main className={style.container_main}>

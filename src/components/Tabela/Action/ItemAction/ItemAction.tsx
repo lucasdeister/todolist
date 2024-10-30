@@ -108,24 +108,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
       }
     
-      const atualizaTempoRestante = (id: number): void => {
-        arrayTarefas[id].tempo_restante = formatarTempo(tempoRestante);
-    };
-
-    const atualizaTempoDecorrido = (id: number): void => {
-        arrayTarefas[id].tempo_decorrido = formatarTempo(tempoDecorrido);
-    };
-
-    const verificarTarefaEmExecucao = (): any => {
-
-        const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
-    
-            if(tarefaEmExecucao.length > 0){
-              return tarefaEmExecucao[0];
-            }else{
-              return null;
-            }
-      }
+  
 
     useEffect(() => {
         if(tarefaEmExecucao){
@@ -133,19 +116,39 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         }else{
             setBotaoExecutarDesativado(false);
         }
-    }, [tarefaEmExecucao]);
+    }, [tarefaEmExecucao, setBotaoExecutarDesativado]);
 
-
-    const atualizarTarefaEmExecucao = (id: number): void => {
-        const possuiTempoRestante = arrayTarefas[id].tempo_restante !== "00:00:00";
-
-        if(possuiTempoRestante){
-            atualizaTempoRestante(id);
-        }
-        atualizaTempoDecorrido(id);
-    }
 
     useEffect(() => {
+
+        const atualizaTempoRestante = (id: number): void => {
+            arrayTarefas[id].tempo_restante = formatarTempo(tempoRestante);
+        };
+    
+        const atualizaTempoDecorrido = (id: number): void => {
+            arrayTarefas[id].tempo_decorrido = formatarTempo(tempoDecorrido);
+        };
+
+        const verificarTarefaEmExecucao = (): any => {
+
+            const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
+        
+                if(tarefaEmExecucao.length > 0){
+                  return tarefaEmExecucao[0];
+                }else{
+                  return null;
+                }
+          }
+
+          const atualizarTarefaEmExecucao = (id: number): void => {
+            const possuiTempoRestante = arrayTarefas[id].tempo_restante !== "00:00:00";
+    
+            if(possuiTempoRestante){
+                atualizaTempoRestante(id);
+            }
+            atualizaTempoDecorrido(id);
+        }
+
         if(tarefaEmExecucao){
             const tarefa = verificarTarefaEmExecucao();
             if(tarefa){
@@ -155,7 +158,8 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
                 recuperarDados();
             }
         }
-    }, [tempoRestante, tarefaEmExecucao, tempoDecorrido]);
+    }, [tempoRestante, tarefaEmExecucao, tempoDecorrido, arrayTarefas,
+        obterIdCorrespondente, recuperarDados, formatarTempo]);
 
     const executarTarefa = (id: number): void => {
         preencherTempoDecorrido(tempo_decorrido);
