@@ -26,7 +26,7 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   const { campo_prazo_disabled ,setCampoPrazoDisabled } = useContext(ModalContext);
   const { limparStates } = useContext(ModalContext);
   const { idTarefaSelecionada } = useContext(UtilContext);
-  const { arrayTarefas } = useContext(UtilContext);
+  const { arrayTarefas, obterIdCorrespondente } = useContext(UtilContext);
   const { descricaoModalApagar } = useContext(ModalContext);
   const { setTituloToast, setDescricaoToast, tituloToast, descricaoToast } = useContext(UtilContext);
 
@@ -100,13 +100,9 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
 
   };
 
-  const identificarIdCorrespondente = (id: number): number => {
-    return arrayTarefas.findIndex((item: any) => item.id === id);
-  }
-
   const editarTarefa = (): void =>{
 
-    const itemIndex = identificarIdCorrespondente(idTarefaSelecionada);
+    const itemIndex = obterIdCorrespondente(idTarefaSelecionada);
 
     arrayTarefas[itemIndex].nome = campo_nome;
     arrayTarefas[itemIndex].duracao = campo_duracao;
