@@ -159,7 +159,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
             }
         }
     }, [tempoRestante, tarefaEmExecucao, tempoDecorrido,
-        recuperarDados, formatarTempo, obterIdCorrespondente]);
+        recuperarDados, formatarTempo]);
 
     const executarTarefa = (id: number): void => {
         preencherTempoDecorrido(tempo_decorrido);
