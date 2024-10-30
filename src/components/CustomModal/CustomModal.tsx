@@ -19,16 +19,16 @@ interface CustomModalProps {
 
 function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomModalProps) {
 
-  const { campo_nome, campo_duracao, campo_prazo, campo_observacoes } = useContext(ModalContext);
-  const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes } = useContext(ModalContext);
-  const { campo_nome_disabled, setCampoNomeDisabled } = useContext(ModalContext);
-  const { campo_duracao_disabled, setCampoDuracaoDisabled } = useContext(ModalContext);
-  const { campo_prazo_disabled ,setCampoPrazoDisabled } = useContext(ModalContext);
-  const { limparStates } = useContext(ModalContext);
-  const { idTarefaSelecionada } = useContext(UtilContext);
-  const { arrayTarefas, obterIdCorrespondente } = useContext(UtilContext);
-  const { descricaoModalApagar } = useContext(ModalContext);
-  const { setTituloToast, setDescricaoToast, tituloToast, descricaoToast } = useContext(UtilContext);
+  const { campo_nome, campo_duracao, campo_prazo, campo_observacoes,
+    setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
+    campo_nome_disabled, setCampoNomeDisabled, descricaoModalApagar,
+    campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled,
+    setCampoPrazoDisabled, limparStates
+   } = useContext(ModalContext);
+   
+  const { idTarefaSelecionada, arrayTarefas, obterIdCorrespondente,
+     setTituloToast, setDescricaoToast, tituloToast, descricaoToast 
+  } = useContext(UtilContext);
 
   const [toast, setToast] = useState(false);
   const exibirToast = (): void => setToast(!toast);

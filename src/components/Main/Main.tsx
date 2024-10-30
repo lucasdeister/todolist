@@ -29,13 +29,15 @@ function Main() {
     }, []);
 
   const { modalState, setModalState, modalNome } = useContext(ModalContext);
-  const { recuperarDados, arrayTarefas, setTtarefaEmExecucao } = useContext(UtilContext);
+  
   const { tempoRestante, setTempoRestante, cronometroAtivo,
-          formatarTempo, tempoDecorrido, setTempoDecorrido
+          formatarTempo, tempoDecorrido, setTempoDecorrido,
+          preencherTempoRestante, preencherTempoDecorrido, setCronometroAtivo
         } = useContext(CronometroContext);
-  const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(UtilContext);
-  const { setCronometroAtivo } = useContext(CronometroContext);
-  const { preencherTempoRestante, preencherTempoDecorrido } = useContext(CronometroContext);
+
+  const { verificouTarefaExecutando, setVerificouTarefaExecutando, recuperarDados,
+          arrayTarefas, setTtarefaEmExecucao
+   } = useContext(UtilContext);
 
   const continuarTarefaEmExecucao = useCallback((tarefa: any): void => {
     preencherTempoRestante(tarefa.tempo_restante);

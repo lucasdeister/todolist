@@ -15,28 +15,19 @@ interface ItemActionProps {
 
 function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: ItemActionProps) {
 
-    const { tarefaEmExecucao, setTtarefaEmExecucao } = useContext(UtilContext);
+    const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
+        setCampoNomeDisabled, setCampoDuracaoDisabled, setCampoPrazoDisabled,
+        habilitarCamposForm, setDescricaoModalApagar, setModalState, setModalNome
+     } = useContext(ModalContext);
 
-    const { setModalState, setModalNome } = useContext(ModalContext);
-    const { arrayTarefas } = useContext(UtilContext);
+    const { setTempoRestante, preencherTempoRestante, setCronometroAtivo, tempoRestante,
+        formatarTempo, tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido,
+        setBotaoExecutarDesativado, botaoExecutarDesativado
+    } = useContext(CronometroContext);
 
-    const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes } = useContext(ModalContext);
-
-    const { setCampoNomeDisabled, setCampoDuracaoDisabled, setCampoPrazoDisabled } = useContext(ModalContext);
-
-    const { habilitarCamposForm } = useContext(ModalContext);
-
-    const { setIdTarefaSelecionada } = useContext(UtilContext);
-
-    const { setDescricaoModalApagar } = useContext(ModalContext);
-
-    const { recuperarDados, obterIdCorrespondente } = useContext(UtilContext);
-
-    const { setTempoRestante, preencherTempoRestante,
-            setCronometroAtivo, tempoRestante, formatarTempo,
-            tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido} = useContext(CronometroContext);
-
-    const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
+    const { tarefaEmExecucao, setTtarefaEmExecucao, arrayTarefas, recuperarDados,
+        obterIdCorrespondente, setIdTarefaSelecionada
+     } = useContext(UtilContext);
 
     const idTarefaArray = obterIdCorrespondente(id);
 
