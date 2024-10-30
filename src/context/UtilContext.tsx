@@ -41,7 +41,7 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
 
   const [tituloToast, setTituloToast] = useState<string>("");
   const [descricaoToast, setDescricaoToast] = useState<string>("");
-  
+
   const [tarefaEmExecucao, setTtarefaEmExecucao] = useState<boolean>(false);
 
   // Estado para armazenar as tarefas
@@ -61,21 +61,22 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
         console.error("Erro ao parsear os dados do localStorage", erro);
       }
     }
-  },[]);
+  }, []);
 
-  const obterIdCorrespondente = (id: number): number => {
+  const obterIdCorrespondente = useCallback((id: number): number => {
     return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
-  }
+  }, []);
 
-  return (
-    <UtilContext.Provider value={{
-       recuperarDados, arrayTarefas, idTarefaSelecionada,
-        setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
-        tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-        setTtarefaEmExecucao, obterIdCorrespondente}}>
-        {children}
-    </UtilContext.Provider>
-  );
+return (
+  <UtilContext.Provider value={{
+    recuperarDados, arrayTarefas, idTarefaSelecionada,
+    setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
+    tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
+    setTtarefaEmExecucao, obterIdCorrespondente
+  }}>
+    {children}
+  </UtilContext.Provider>
+);
 };
 
 // Hook customizado para usar o contexto
