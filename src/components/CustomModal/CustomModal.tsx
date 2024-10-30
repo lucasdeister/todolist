@@ -113,6 +113,10 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
     arrayTarefas[itemIndex].prazo = campo_prazo;
     arrayTarefas[itemIndex].observacoes = campo_observacoes;
 
+    if(arrayTarefas[itemIndex].status === "A fazer"){
+      arrayTarefas[itemIndex].tempo_restante = campo_duracao;
+    }
+
     localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
 
     fecharModal();
