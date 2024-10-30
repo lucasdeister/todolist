@@ -12,6 +12,7 @@ interface CronometroContextProps {
   formatarTempo: (segundosTotais: number) => string;
   preencherTempoRestanteNoTitulo: (tempo_restante: string) => void;
   setBotaoExecutarDesativado: (status_botao: boolean) => void;
+  preencherTempoDecorrido: (tempo_decorrido: string) => void;
 }
 
 export const CronometroContext = createContext<CronometroContextProps | undefined>(undefined);
@@ -37,7 +38,14 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   const preencherTempoRestanteNoTitulo = (tempo_restante: string): void =>{
     const tempo_titulo = converterTempoParaSegundos(tempo_restante);
     setTempoRestante(tempo_titulo);
+
 }
+
+const preencherTempoDecorrido = (tempo_decorrido: string): void =>{
+    const asd = converterTempoParaSegundos(tempo_decorrido);
+    setTempoDecorrido(asd);
+}
+
 
   // Função para formatar o tempo em horas, minutos e segundos
   const formatarTempo = (segundosTotais: number): string => {
@@ -55,7 +63,8 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   return (
     <CronometroContext.Provider value={{ tempoRestante, setTempoRestante, converterTempoParaSegundos,
       cronometroAtivo, setCronometroAtivo, formatarTempo, preencherTempoRestanteNoTitulo,
-      botaoExecutarDesativado, setBotaoExecutarDesativado, tempoDecorrido, setTempoDecorrido}}>
+      botaoExecutarDesativado, setBotaoExecutarDesativado, tempoDecorrido, setTempoDecorrido,
+      preencherTempoDecorrido}}>
       {children}
     </CronometroContext.Provider>
   );

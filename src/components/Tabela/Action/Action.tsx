@@ -7,6 +7,7 @@ interface ActionProps {
     id: number;
     status: string;
     tempo_restante: string;
+    tempo_decorrido: string;
 }
 
 const opcoes = [
@@ -42,7 +43,7 @@ const opcoes = [
     }
 ];
 
-const Action = ({ status, id, tempo_restante } : ActionProps) => {
+const Action = ({ status, id, tempo_restante, tempo_decorrido } : ActionProps) => {
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
 
@@ -75,7 +76,8 @@ const Action = ({ status, id, tempo_restante } : ActionProps) => {
                             nome={opcao.nome}
                             id={id}
                             nome_icone={opcao.nome_icone}
-                            tempo_restante={tempo_restante} />
+                            tempo_restante={tempo_restante}
+                            tempo_decorrido={tempo_decorrido} />
                 ))}
             </ul>
         </div>

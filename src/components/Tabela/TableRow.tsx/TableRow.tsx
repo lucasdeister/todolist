@@ -23,6 +23,7 @@ const TableRow = ({ rowData, isMobile }) => {
                 status={rowData.status}
                 id={rowData.id}
                 tempo_restante={rowData.tempo_restante}
+                tempo_decorrido={rowData.tempo_decorrido}
             />
         </td>
     </tr>

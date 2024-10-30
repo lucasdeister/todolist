@@ -10,9 +10,10 @@ interface ItemActionProps {
     nome_icone: string;
     id: number;
     tempo_restante: string;
+    tempo_decorrido: string;
 }
 
-function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
+function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: ItemActionProps) {
 
     const { tarefaEmExecucao, setTtarefaEmExecucao } = useContext(UtilContext);
 
@@ -33,7 +34,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
 
     const { setTempoRestante, preencherTempoRestanteNoTitulo,
             setCronometroAtivo, tempoRestante, formatarTempo,
-            tempoDecorrido, setTempoDecorrido} = useContext(CronometroContext);
+            tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido} = useContext(CronometroContext);
 
     const { setBotaoExecutarDesativado, botaoExecutarDesativado } = useContext(CronometroContext);
 
@@ -115,14 +116,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
         arrayTarefas[id].tempo_decorrido = formatarTempo(tempoDecorrido);
     };
 
-    const executarTarefa = (id: number): void => {
-        // setTempoDecorrido(0);
-        preencherTempoRestanteNoTitulo(tempo_restante);
-        setCronometroAtivo(true);
-        setTtarefaEmExecucao(true);
-        colocarTarefaEmExecucao(id);
-    }
-
     const verificarTarefaEmExecucao = (): any => {
 
         const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
@@ -163,6 +156,14 @@ function ItemAction({ nome, nome_icone, id, tempo_restante }: ItemActionProps) {
             }
         }
     }, [tempoRestante, tarefaEmExecucao, tempoDecorrido]);
+
+    const executarTarefa = (id: number): void => {
+        preencherTempoDecorrido(tempo_decorrido);
+        preencherTempoRestanteNoTitulo(tempo_restante);
+        setCronometroAtivo(true);
+        setTtarefaEmExecucao(true);
+        colocarTarefaEmExecucao(id);
+    }
 
     const pausarTarefa = (id: number): void => {
         setCronometroAtivo(false);
