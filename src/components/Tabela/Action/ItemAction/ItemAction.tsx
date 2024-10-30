@@ -32,7 +32,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     const { recuperarDados, obterIdCorrespondente } = useContext(UtilContext);
 
-    const { setTempoRestante, preencherTempoRestanteNoTitulo,
+    const { setTempoRestante, preencherTempoRestante,
             setCronometroAtivo, tempoRestante, formatarTempo,
             tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido} = useContext(CronometroContext);
 
@@ -159,7 +159,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     const executarTarefa = (id: number): void => {
         preencherTempoDecorrido(tempo_decorrido);
-        preencherTempoRestanteNoTitulo(tempo_restante);
+        preencherTempoRestante(tempo_restante);
         setCronometroAtivo(true);
         setTtarefaEmExecucao(true);
         colocarTarefaEmExecucao(id);

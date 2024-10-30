@@ -35,7 +35,7 @@ function Main() {
         } = useContext(CronometroContext);
   const { verificouTarefaExecutando, setVerificouTarefaExecutando } = useContext(UtilContext);
   const { setCronometroAtivo } = useContext(CronometroContext);
-  const { preencherTempoRestanteNoTitulo } = useContext(CronometroContext);
+  const { preencherTempoRestante, preencherTempoDecorrido } = useContext(CronometroContext);
 
   const verificarTarefaEmExecucao = (): any => {
 
@@ -49,7 +49,8 @@ function Main() {
   }
 
   const continuarTarefaEmExecucao = (tarefa: any): void => {
-      preencherTempoRestanteNoTitulo(tarefa.tempo_restante);
+      preencherTempoRestante(tarefa.tempo_restante);
+      preencherTempoDecorrido(tarefa.tempo_decorrido);
       setCronometroAtivo(true);
       setTtarefaEmExecucao(true);
       setVerificouTarefaExecutando(false);

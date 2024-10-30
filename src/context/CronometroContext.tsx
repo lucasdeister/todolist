@@ -10,7 +10,7 @@ interface CronometroContextProps {
   converterTempoParaSegundos: (tempo: string) => number;
   setCronometroAtivo: (status_cronometro: boolean) => void;
   formatarTempo: (segundosTotais: number) => string;
-  preencherTempoRestanteNoTitulo: (tempo_restante: string) => void;
+  preencherTempoRestante: (tempo_restante: string) => void;
   setBotaoExecutarDesativado: (status_botao: boolean) => void;
   preencherTempoDecorrido: (tempo_decorrido: string) => void;
 }
@@ -35,7 +35,7 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
     return horas * 3600 + minutos * 60 + segundos;
   };
 
-  const preencherTempoRestanteNoTitulo = (tempo_restante: string): void =>{
+  const preencherTempoRestante = (tempo_restante: string): void =>{
     const tempo_titulo = converterTempoParaSegundos(tempo_restante);
     setTempoRestante(tempo_titulo);
 
@@ -62,7 +62,7 @@ const preencherTempoDecorrido = (tempo_decorrido: string): void =>{
 
   return (
     <CronometroContext.Provider value={{ tempoRestante, setTempoRestante, converterTempoParaSegundos,
-      cronometroAtivo, setCronometroAtivo, formatarTempo, preencherTempoRestanteNoTitulo,
+      cronometroAtivo, setCronometroAtivo, formatarTempo, preencherTempoRestante,
       botaoExecutarDesativado, setBotaoExecutarDesativado, tempoDecorrido, setTempoDecorrido,
       preencherTempoDecorrido}}>
       {children}
