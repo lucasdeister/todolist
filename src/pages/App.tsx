@@ -12,21 +12,12 @@ function App() {
 
   useEffect(() => {
     const checkAppVersion = () => {
-      // Obtenha a versão atual do HTML
-      const currentVersion = document.querySelector('meta[name="app-version"]')?.getAttribute('content');
-
-      // Obtenha a última versão salva no localStorage
-      const savedVersion = localStorage.getItem('appVersion');
-
-      // Se a versão mudou, limpe o cache e atualize a página
-      if (currentVersion && currentVersion !== savedVersion) {
-        localStorage.setItem('appVersion', currentVersion);
-        window.location.reload(); // Recarrega ignorando o cache
-      }
+      window.location.reload();
     };
 
     checkAppVersion();
   }, []);
+  
   return (
     <div className={style.grid_container}>
       <Header/>

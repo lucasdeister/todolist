@@ -44,6 +44,7 @@ function ContentModalTarefas({
   campo_prazo_disabled,
   campo_inicio_disabled }: ContentModalTarefasProps) {
 
+    const asd = 0;
   return (
     <form>
       <Campo nome={"Nome"} tipo={"text"} value={campo_nome} disabled={campo_nome_disabled}
