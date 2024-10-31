@@ -28,6 +28,8 @@ interface UtilContextProps {
   setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
   obterIdCorrespondente: (id: number) => number;
   obterDiaAtual: () => string;
+  validouCamposObrigatorios: (nome: string, prazo: string,
+    duracao_horas: number, duracao_minutos: number) => boolean;
 }
 
 // Criando o contexto com tipo adequado
@@ -79,12 +81,23 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
     return `${ano}-${mes}-${dia}`;
   };
 
+  const validouCamposObrigatorios = (nome: string, prazo: string,
+     duracao_horas: number, duracao_minutos: number): boolean =>{
+
+    if (nome === "" || prazo === "" || (duracao_horas === 0 && duracao_minutos === 0) ||
+     (Number.isNaN(duracao_minutos)) || (Number.isNaN(duracao_horas))) {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
 return (
   <UtilContext.Provider value={{
     recuperarDados, arrayTarefas, idTarefaSelecionada,
     setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
     tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual
+    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual, validouCamposObrigatorios
   }}>
     {children}
   </UtilContext.Provider>

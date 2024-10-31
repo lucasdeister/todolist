@@ -21,12 +21,12 @@ function Campo({ nome, tipo, value, onChange, disabled }: CampoProps) {
       <input
         id={nome.toLowerCase()}
         className="form-control" 
-        type={tipo} 
-        value={value} 
-        // {...(tipo === "number" ? { step: "1", min: "0", max: "100" } : {})}
+        type={tipo}
+        value={value}
         onChange={onChange}
         required
         disabled={disabled}
+        {...(tipo === "number" ? { min: "0" } : {})}
       />
     </div>
   );

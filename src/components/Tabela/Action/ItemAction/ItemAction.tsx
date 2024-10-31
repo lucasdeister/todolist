@@ -15,10 +15,10 @@ interface ItemActionProps {
 
 function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: ItemActionProps) {
 
-    const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
+    const { setCampoNome, setCampoPrazo, setCampoObservacoes,
         setCampoNomeDisabled, setCampoDuracaoDisabled, setCampoPrazoDisabled,
         habilitarCamposForm, setDescricaoModalApagar, setModalState, setModalNome,
-        setCampoInicioDisabled, setCampoInicio
+        setCampoInicioDisabled, setCampoInicio, setCampoDuracaoHoras, setCampoDuracaoMinutos
         } = useContext(ModalContext);
 
     const { setTempoRestante, preencherTempoRestante, setCronometroAtivo, tempoRestante,
@@ -55,9 +55,15 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     }
 
+    function obterHoraMinuto(duracao: string) {
+        const [horas, minutos] = duracao.split(':').map(Number);
+        return [horas, minutos];
+      }
+
     const preencherInformacoesTarefa = (idTarefaArray : number): void => {
         setCampoNome(arrayTarefas[idTarefaArray].nome)
-        setCampoDuracao(arrayTarefas[idTarefaArray].duracao)
+        setCampoDuracaoHoras(obterHoraMinuto(arrayTarefas[idTarefaArray].duracao)[0])
+        setCampoDuracaoMinutos(obterHoraMinuto(arrayTarefas[idTarefaArray].duracao)[1])
         setCampoPrazo(arrayTarefas[idTarefaArray].prazo)
         setCampoInicio(arrayTarefas[idTarefaArray].inicio)
         setCampoObservacoes(arrayTarefas[idTarefaArray].observacoes)

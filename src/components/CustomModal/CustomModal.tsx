@@ -19,16 +19,16 @@ interface CustomModalProps {
 
 function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomModalProps) {
 
-  const { campo_nome, campo_duracao, campo_prazo, campo_observacoes,
-    setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
+  const { campo_nome, campo_duracao_horas, campo_prazo, campo_observacoes,
+    setCampoNome, setCampoDuracaoHoras, setCampoPrazo, setCampoObservacoes,
     campo_nome_disabled, setCampoNomeDisabled, descricaoModalApagar,
     campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled,
     setCampoPrazoDisabled, limparStates, campo_inicio, campo_inicio_disabled,
-    setCampoInicio, setCampoInicioDisabled
+    setCampoInicio, setCampoInicioDisabled, campo_duracao_minutos, setCampoDuracaoMinutos,
    } = useContext(ModalContext);
    
   const { idTarefaSelecionada, arrayTarefas, obterIdCorrespondente,
-     setTituloToast, setDescricaoToast, tituloToast, descricaoToast 
+     setTituloToast, setDescricaoToast, tituloToast, descricaoToast, validouCamposObrigatorios 
   } = useContext(UtilContext);
 
   const [toast, setToast] = useState(false);
@@ -70,9 +70,20 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
     limparStates();
   }
 
+
+  function obterDuracao(horas: number, minutos: number) {
+    const horasFormatadas = String(horas).padStart(2, '0');
+    const minutosFormatados = String(minutos).padStart(2, '0');
+    
+    return `${horasFormatadas}:${minutosFormatados}:00`;
+  }
+
+  
+  const duracao_tarefa = obterDuracao(campo_duracao_horas, campo_duracao_minutos);
+
   const criarTarefa = (): void => {
 
-    if (campo_nome === "" || campo_duracao === "" || campo_prazo === "") {
+    if(!validouCamposObrigatorios(campo_nome, campo_prazo, campo_duracao_horas, campo_duracao_minutos)){
       handleToast("Erro", "Favor preencher as informações corretamente.");
       return
     }
@@ -85,8 +96,8 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
       id: novoId,
       nome: campo_nome,
       status: 'A fazer',
-      duracao: campo_duracao,
-      tempo_restante: campo_duracao,
+      duracao: duracao_tarefa,
+      tempo_restante: duracao_tarefa,
       tempo_decorrido: "00:00:00",
       prazo: campo_prazo,
       observacoes: campo_observacoes,
@@ -103,18 +114,23 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
 
   };
 
-  const editarTarefa = (): void =>{
+  const editarTarefa = (): void => {
+
+    if(!validouCamposObrigatorios(campo_nome, campo_prazo, campo_duracao_horas, campo_duracao_minutos)){
+      handleToast("Erro", "Favor preencher as informações corretamente.");
+      return
+    }
 
     const itemIndex = obterIdCorrespondente(idTarefaSelecionada);
 
     arrayTarefas[itemIndex].nome = campo_nome;
-    arrayTarefas[itemIndex].duracao = campo_duracao;
+    arrayTarefas[itemIndex].duracao = duracao_tarefa;
     arrayTarefas[itemIndex].prazo = campo_prazo;
     arrayTarefas[itemIndex].observacoes = campo_observacoes;
     arrayTarefas[itemIndex].inicio = campo_inicio;
 
     if(arrayTarefas[itemIndex].status === "A fazer"){
-      arrayTarefas[itemIndex].tempo_restante = campo_duracao;
+      arrayTarefas[itemIndex].tempo_restante = duracao_tarefa;
     }
 
     localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
@@ -166,12 +182,14 @@ const verificarModal = (): void => {
           {nome_modal === "Criar Tarefa" || nome_modal === "Editar Tarefa" ? (
             <ContentModalTarefas 
               campo_nome={campo_nome}
-              campo_duracao={campo_duracao}
+              campo_duracao_minutos={campo_duracao_minutos}
+              campo_duracao_horas={campo_duracao_horas}
               campo_prazo={campo_prazo}
               campo_observacoes={campo_observacoes}
               campo_inicio={campo_inicio}
               setCampoNome={setCampoNome}
-              setCampoDuracao={setCampoDuracao}
+              setCampoDuracaoMinutos={setCampoDuracaoMinutos}
+              setCampoDuracaoHoras={setCampoDuracaoHoras}
               setCampoPrazo={setCampoPrazo}
               setCampoObservacoes={setCampoObservacoes}
               setCampoInicio={setCampoInicio}

@@ -5,7 +5,8 @@ import style from "./ContentModalTarefas.module.css"
 
 interface ContentModalTarefasProps {
   campo_nome: string;
-  campo_duracao: string;
+  campo_duracao_horas: number;
+  campo_duracao_minutos: number;
   campo_prazo: string;
   campo_observacoes: string;
   campo_inicio: string;
@@ -14,24 +15,27 @@ interface ContentModalTarefasProps {
   campo_prazo_disabled: boolean;
   campo_inicio_disabled: boolean;
   setCampoNome: (campo_nome: string) => void;
-  setCampoDuracao: (campo_duracao: string) => void;
+  setCampoDuracaoHoras: (campo_duracao_horas: number) => void;
+  setCampoDuracaoMinutos: (campo_duracao_minutos: number) => void;
   setCampoPrazo: (campo_prazo: string) => void;
   setCampoObservacoes: (campo_observacoes: string) => void;
   setCampoInicio: (campo_inicio: string) => void;
   setCampoNomeDisabled: (campo_nome_disabled: boolean) => void;
-  setCampoDuracaoDisabled: (campo_duracao_disabled: boolean) => void;
+  setCampoDuracaoDisabled: (campo_duracao_horas_disabled: boolean) => void;
   setCampoPrazoDisabled: (campo_prazo_disabled: boolean) => void;
   setCampoInicioDisabled: (campo_prazo_disabled: boolean) => void;
 }
 
 function ContentModalTarefas({
   campo_nome,
-  campo_duracao,
+  campo_duracao_horas,
+  campo_duracao_minutos,
   campo_observacoes,
   campo_prazo,
   campo_inicio,
   setCampoNome,
-  setCampoDuracao,
+  setCampoDuracaoHoras,
+  setCampoDuracaoMinutos,
   setCampoPrazo,
   setCampoObservacoes,
   setCampoInicio,
@@ -46,14 +50,12 @@ function ContentModalTarefas({
         onChange={(e) => setCampoNome(e.target.value)} />
       <Campo nome={"Início"} tipo={"date"} value={campo_inicio}
         onChange={(e) => setCampoInicio(e.target.value)} disabled={campo_inicio_disabled} />
-      <label className="mt-3">Duração</label>
       <div className={style.container_duracao}>
-        <Campo nome={"Horas"} tipo={"number"} value={campo_duracao} disabled={campo_duracao_disabled}
-          onChange={(e) => setCampoDuracao(e.target.value)} />
-        <Campo nome={"Minutos"} tipo={"number"} value={campo_duracao} disabled={campo_duracao_disabled}
-          onChange={(e) => setCampoDuracao(e.target.value)} />
+        <Campo nome={"Duração em horas"} tipo={"number"} value={campo_duracao_horas.toString()}
+         disabled={campo_duracao_disabled} onChange={(e) => setCampoDuracaoHoras(parseInt(e.target.value))} />
+        <Campo nome={"Duração em minutos"} tipo={"number"} value={campo_duracao_minutos.toString()}
+          disabled={campo_duracao_disabled} onChange={(e) => setCampoDuracaoMinutos(parseInt(e.target.value))} />
       </div>
-
       <Campo nome={"Prazo"} tipo={"date"} value={campo_prazo}
         onChange={(e) => setCampoPrazo(e.target.value)} disabled={campo_prazo_disabled} />
       <TextArea nome={"Observações"} value={campo_observacoes}

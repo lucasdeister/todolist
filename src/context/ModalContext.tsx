@@ -4,7 +4,8 @@ interface ModalContextProps {
   modalState: boolean;
   modalNome: string;
   campo_nome: string;
-  campo_duracao: string;
+  campo_duracao_horas: number;
+  campo_duracao_minutos: number;
   campo_prazo: string;
   campo_observacoes: string;
   campo_inicio: string;
@@ -14,7 +15,8 @@ interface ModalContextProps {
   campo_inicio_disabled: boolean;
   descricaoModalApagar: string;
   setCampoNome: (campo_nome: string) => void;
-  setCampoDuracao: (campo_duracao: string) => void;
+  setCampoDuracaoHoras: (campo_duracao_horas: number) => void;
+  setCampoDuracaoMinutos: (campo_duracao_minutos: number) => void;
   setCampoPrazo: (campo_prazo: string) => void;
   setCampoObservacoes: (campo_observacoes: string) => void;
   setCampoInicio: (campo_inicio: string) => void;
@@ -42,7 +44,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [modalNome, setModalNome] = useState<string>("");
 
   const [campo_nome, setCampoNome] = useState<string>('');
-  const [campo_duracao, setCampoDuracao] = useState<string>('');
+  const [campo_duracao_horas, setCampoDuracaoHoras] = useState<number>(0);
+  const [campo_duracao_minutos, setCampoDuracaoMinutos] = useState<number>(0);
   const [campo_prazo, setCampoPrazo] = useState<string>('');
   const [campo_observacoes, setCampoObservacoes] = useState<string>('');
   const [campo_inicio, setCampoInicio] = useState<string>('');
@@ -63,7 +66,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
 
   const limparStates = (): void => {
     setCampoNome("");
-    setCampoDuracao("");
+    setCampoDuracaoHoras(0);
+    setCampoDuracaoMinutos(0);
     setCampoPrazo("");
     setCampoObservacoes("");
     setCampoInicio("");
@@ -73,11 +77,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={{
        modalState, setModalState, limparStates, modalNome, setModalNome,
-       campo_nome, campo_duracao, campo_observacoes, campo_prazo, setCampoNome, setCampoDuracao,
-       setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled,
-       campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled,
-       habilitarCamposForm, descricaoModalApagar, setDescricaoModalApagar, campo_inicio, setCampoInicio,
-       campo_inicio_disabled, setCampoInicioDisabled}}>
+       campo_nome, campo_duracao_horas, campo_duracao_minutos, campo_observacoes, campo_prazo, setCampoNome,
+       setCampoDuracaoHoras, setCampoDuracaoMinutos, setCampoPrazo, setCampoObservacoes, campo_nome_disabled,
+       setCampoNomeDisabled, campo_duracao_disabled, setCampoDuracaoDisabled,
+       campo_prazo_disabled, setCampoPrazoDisabled, habilitarCamposForm, descricaoModalApagar,
+       setDescricaoModalApagar, campo_inicio, setCampoInicio, campo_inicio_disabled,
+       setCampoInicioDisabled}}>
         {children}
     </ModalContext.Provider>
   );
