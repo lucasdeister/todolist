@@ -1,6 +1,8 @@
 import Campo from "../../Campo/Campo";
 import TextArea from "../../Campo/TextArea/TextArea";
 
+import style from "./ContentModalTarefas.module.css"
+
 interface ContentModalTarefasProps {
   campo_nome: string;
   campo_duracao: string;
@@ -44,8 +46,14 @@ function ContentModalTarefas({
         onChange={(e) => setCampoNome(e.target.value)} />
       <Campo nome={"Início"} tipo={"date"} value={campo_inicio}
         onChange={(e) => setCampoInicio(e.target.value)} disabled={campo_inicio_disabled} />
-      <Campo nome={"Duração"} tipo={"time"} value={campo_duracao} disabled={campo_duracao_disabled}
-        onChange={(e) => setCampoDuracao(e.target.value)} />
+      <label className="mt-3">Duração</label>
+      <div className={style.container_duracao}>
+        <Campo nome={"Horas"} tipo={"number"} value={campo_duracao} disabled={campo_duracao_disabled}
+          onChange={(e) => setCampoDuracao(e.target.value)} />
+        <Campo nome={"Minutos"} tipo={"number"} value={campo_duracao} disabled={campo_duracao_disabled}
+          onChange={(e) => setCampoDuracao(e.target.value)} />
+      </div>
+
       <Campo nome={"Prazo"} tipo={"date"} value={campo_prazo}
         onChange={(e) => setCampoPrazo(e.target.value)} disabled={campo_prazo_disabled} />
       <TextArea nome={"Observações"} value={campo_observacoes}

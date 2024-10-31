@@ -13,7 +13,7 @@ interface CampoProps {
 function Campo({ nome, tipo, value, onChange, disabled }: CampoProps) {
 
   return (
-    <div className="form-group mt-3">
+    <div className={`form-group mt-3 ${tipo === "number" ? "me-3" : ""}`}>
       <label htmlFor={nome.toLowerCase()} className="form-label">
         {nome}
         {nome === "Início" && <span className={styles.optional}>(Opcional)</span>}
@@ -23,7 +23,7 @@ function Campo({ nome, tipo, value, onChange, disabled }: CampoProps) {
         className="form-control" 
         type={tipo} 
         value={value} 
-        {...(tipo === "time" ? { step: "1" } : {})}
+        // {...(tipo === "number" ? { step: "1", min: "0", max: "100" } : {})}
         onChange={onChange}
         required
         disabled={disabled}
