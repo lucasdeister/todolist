@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, ReactNode, useCallback } from "react";
 
 interface Tarefa {
+  data_execucao: string;
+  inicio: string;
   id: number;
   nome: string;
   prazo: string;
@@ -25,6 +27,7 @@ interface UtilContextProps {
   setDescricaoToast: (descricao_toast: string) => void;
   setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
   obterIdCorrespondente: (id: number) => number;
+  obterDiaAtual: () => string;
 }
 
 // Criando o contexto com tipo adequado
@@ -67,12 +70,21 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
     return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
   }
 
+  const obterDiaAtual = (): string => {
+    const dataAtual = new Date();
+    const ano = dataAtual.getFullYear();
+    const mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0');
+    const dia = dataAtual.getDate().toString().padStart(2, '0');
+    
+    return `${ano}-${mes}-${dia}`;
+  };
+
 return (
   <UtilContext.Provider value={{
     recuperarDados, arrayTarefas, idTarefaSelecionada,
     setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
     tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-    setTtarefaEmExecucao, obterIdCorrespondente
+    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual
   }}>
     {children}
   </UtilContext.Provider>

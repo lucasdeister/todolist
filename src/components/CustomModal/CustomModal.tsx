@@ -23,7 +23,8 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
     setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
     campo_nome_disabled, setCampoNomeDisabled, descricaoModalApagar,
     campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled,
-    setCampoPrazoDisabled, limparStates
+    setCampoPrazoDisabled, limparStates, campo_inicio, campo_inicio_disabled,
+    setCampoInicio, setCampoInicioDisabled
    } = useContext(ModalContext);
    
   const { idTarefaSelecionada, arrayTarefas, obterIdCorrespondente,
@@ -89,6 +90,8 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
       tempo_decorrido: "00:00:00",
       prazo: campo_prazo,
       observacoes: campo_observacoes,
+      inicio: campo_inicio,
+      data_execucao: ""
     };
 
     tarefasSalvas.push(novaTarefa);
@@ -108,6 +111,7 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
     arrayTarefas[itemIndex].duracao = campo_duracao;
     arrayTarefas[itemIndex].prazo = campo_prazo;
     arrayTarefas[itemIndex].observacoes = campo_observacoes;
+    arrayTarefas[itemIndex].inicio = campo_inicio;
 
     if(arrayTarefas[itemIndex].status === "A fazer"){
       arrayTarefas[itemIndex].tempo_restante = campo_duracao;
@@ -165,16 +169,20 @@ const verificarModal = (): void => {
               campo_duracao={campo_duracao}
               campo_prazo={campo_prazo}
               campo_observacoes={campo_observacoes}
+              campo_inicio={campo_inicio}
               setCampoNome={setCampoNome}
               setCampoDuracao={setCampoDuracao}
               setCampoPrazo={setCampoPrazo}
               setCampoObservacoes={setCampoObservacoes}
+              setCampoInicio={setCampoInicio}
               campo_nome_disabled={campo_nome_disabled}
               setCampoNomeDisabled={setCampoNomeDisabled}
               campo_duracao_disabled={campo_duracao_disabled}
               setCampoDuracaoDisabled={setCampoDuracaoDisabled}
               campo_prazo_disabled={campo_prazo_disabled}
               setCampoPrazoDisabled={setCampoPrazoDisabled}
+              campo_inicio_disabled={campo_inicio_disabled}
+              setCampoInicioDisabled={setCampoInicioDisabled}
               />
           ) : (
             <ContentModalApagar descricao={descricaoModalApagar}/>

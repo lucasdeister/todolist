@@ -13,7 +13,7 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
     const { setModalNome, limparStates, habilitarCamposForm,
          setCampoPrazo, setDescricaoModalApagar } = useContext(ModalContext);
 
-    const { setIdTarefaSelecionada } = useContext(UtilContext);
+    const { setIdTarefaSelecionada, obterDiaAtual } = useContext(UtilContext);
 
     const exibirModalCriacao = () => {
         handleShow();
@@ -22,15 +22,6 @@ function BotaoPrincipal({ texto, classe, handleShow }: BotaoPrincipalProps) {
         setModalNome("Criar");
         setCampoPrazo(obterDiaAtual())
     }
-    
-    const obterDiaAtual = (): string => {
-        const dataAtual = new Date();
-        const ano = dataAtual.getFullYear();
-        const mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0');
-        const dia = dataAtual.getDate().toString().padStart(2, '0');
-        
-        return `${ano}-${mes}-${dia}`;
-      };
 
     const exibirModalApagar = () => {
         handleShow();

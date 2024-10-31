@@ -13,7 +13,7 @@ import { UtilContext } from "../../context/UtilContext";
 
 function Main() {
 
-  const columnsDesktop = ["Id", "Nome", "Status", "Duração",
+  const columnsDesktop = ["Id", "Nome", "Status", "Início previsto", "Duração",
     "Tempo restante", "Tempo decorrido", "Realizar até", "Ações"];
   const columnsMobile = ["Id", "Nome", "Status", "Ações"];
 

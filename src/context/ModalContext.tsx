@@ -7,20 +7,24 @@ interface ModalContextProps {
   campo_duracao: string;
   campo_prazo: string;
   campo_observacoes: string;
+  campo_inicio: string;
   campo_nome_disabled: boolean;
   campo_duracao_disabled: boolean;
   campo_prazo_disabled: boolean;
+  campo_inicio_disabled: boolean;
   descricaoModalApagar: string;
   setCampoNome: (campo_nome: string) => void;
   setCampoDuracao: (campo_duracao: string) => void;
   setCampoPrazo: (campo_prazo: string) => void;
   setCampoObservacoes: (campo_observacoes: string) => void;
+  setCampoInicio: (campo_inicio: string) => void;
   setModalState: (state: boolean) => void;
   setModalNome: (state: string) => void;
   limparStates: () => void;
   setCampoNomeDisabled: (campo_nome_disabled: boolean) => void;
   setCampoDuracaoDisabled: (campo_duracao_disabled: boolean) => void;
   setCampoPrazoDisabled: (campo_prazo_disabled: boolean) => void;
+  setCampoInicioDisabled: (campo_inicio_disabled: boolean) => void;
   habilitarCamposForm: () => void;
   setDescricaoModalApagar: (descricao_modal_apagar: string) => void;
 }
@@ -41,10 +45,12 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [campo_duracao, setCampoDuracao] = useState<string>('');
   const [campo_prazo, setCampoPrazo] = useState<string>('');
   const [campo_observacoes, setCampoObservacoes] = useState<string>('');
+  const [campo_inicio, setCampoInicio] = useState<string>('');
 
   const [campo_nome_disabled, setCampoNomeDisabled] = useState<boolean>(false);
   const [campo_duracao_disabled, setCampoDuracaoDisabled] = useState<boolean>(false);
   const [campo_prazo_disabled, setCampoPrazoDisabled] = useState<boolean>(false);
+  const [campo_inicio_disabled, setCampoInicioDisabled] = useState<boolean>(false);
 
   const [descricaoModalApagar, setDescricaoModalApagar] = useState<string>('');
 
@@ -52,6 +58,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     setCampoNomeDisabled(false);
     setCampoDuracaoDisabled(false)
     setCampoPrazoDisabled(false);
+    setCampoInicioDisabled(false);
   }
 
   const limparStates = (): void => {
@@ -59,6 +66,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     setCampoDuracao("");
     setCampoPrazo("");
     setCampoObservacoes("");
+    setCampoInicio("");
   };
 
 
@@ -68,7 +76,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
        campo_nome, campo_duracao, campo_observacoes, campo_prazo, setCampoNome, setCampoDuracao,
        setCampoPrazo, setCampoObservacoes, campo_nome_disabled, setCampoNomeDisabled,
        campo_duracao_disabled, setCampoDuracaoDisabled, campo_prazo_disabled, setCampoPrazoDisabled,
-       habilitarCamposForm, descricaoModalApagar, setDescricaoModalApagar}}>
+       habilitarCamposForm, descricaoModalApagar, setDescricaoModalApagar, campo_inicio, setCampoInicio,
+       campo_inicio_disabled, setCampoInicioDisabled}}>
         {children}
     </ModalContext.Provider>
   );

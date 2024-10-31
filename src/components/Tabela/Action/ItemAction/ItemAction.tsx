@@ -17,8 +17,9 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     const { setCampoNome, setCampoDuracao, setCampoPrazo, setCampoObservacoes,
         setCampoNomeDisabled, setCampoDuracaoDisabled, setCampoPrazoDisabled,
-        habilitarCamposForm, setDescricaoModalApagar, setModalState, setModalNome
-     } = useContext(ModalContext);
+        habilitarCamposForm, setDescricaoModalApagar, setModalState, setModalNome,
+        setCampoInicioDisabled, setCampoInicio
+        } = useContext(ModalContext);
 
     const { setTempoRestante, preencherTempoRestante, setCronometroAtivo, tempoRestante,
         formatarTempo, tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido,
@@ -26,7 +27,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
     } = useContext(CronometroContext);
 
     const { tarefaEmExecucao, setTtarefaEmExecucao, arrayTarefas, recuperarDados,
-        obterIdCorrespondente, setIdTarefaSelecionada
+        obterIdCorrespondente, setIdTarefaSelecionada, obterDiaAtual
      } = useContext(UtilContext);
 
     const idTarefaArray = obterIdCorrespondente(id);
@@ -58,6 +59,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         setCampoNome(arrayTarefas[idTarefaArray].nome)
         setCampoDuracao(arrayTarefas[idTarefaArray].duracao)
         setCampoPrazo(arrayTarefas[idTarefaArray].prazo)
+        setCampoInicio(arrayTarefas[idTarefaArray].inicio)
         setCampoObservacoes(arrayTarefas[idTarefaArray].observacoes)
     }
 
@@ -73,11 +75,16 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         setCampoPrazoDisabled(true);
     }
 
+    const desabilitarCampoInicio = (): void => {
+        setCampoInicioDisabled(true);
+    }
+
 
     const desabilitarCamposTarefasIniciadas = (idTarefaArray: number): void => {
 
         desabilitarCampoNome();
         desabilitarCampoDuracao();
+        desabilitarCampoInicio();
 
         const tarefaEncerrada = (arrayTarefas[idTarefaArray].status === "Concluída"
             || arrayTarefas[idTarefaArray].status === "Cancelada");
@@ -96,6 +103,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
     
     const colocarTarefaEmExecucao = (id: number): void =>{
         arrayTarefas[id].status = "Executando";
+        arrayTarefas[id].data_execucao = obterDiaAtual();
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
       }
     
