@@ -41,7 +41,7 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
   }
 
   const obterTarefasAFazer = (tarefa: { status: string }): boolean => {
-    return tarefa.status === "A fazer";
+    return tarefa.status === "Pausada";//A fazer
   };
   
   const apagarTarefasAFazer = (): void => {
@@ -83,10 +83,10 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
 
   const criarTarefa = (): void => {
 
-    if(!validouCamposObrigatorios(campo_nome, campo_prazo, campo_duracao_horas, campo_duracao_minutos)){
-      handleToast("Erro", "Favor preencher as informações corretamente.");
-      return
-    }
+    // if(!validouCamposObrigatorios(campo_nome, campo_prazo, campo_duracao_horas, campo_duracao_minutos)){
+    //   handleToast("Erro", "Favor preencher as informações corretamente.");
+    //   return
+    // }
 
     const tarefasSalvas = JSON.parse(localStorage.getItem('tarefas') || '[]');
     const ultimoId = tarefasSalvas.length > 0 ? Math.max(...tarefasSalvas.map((tarefa: any) => tarefa.id)) : 0;
@@ -96,8 +96,8 @@ function CustomModal({ nome_modal, show, atualizarGrid, handleClose }: CustomMod
       id: novoId,
       nome: campo_nome,
       status: 'A fazer',
-      duracao: duracao_tarefa,
-      tempo_restante: duracao_tarefa,
+      duracao: "01:00:00",//duracao_tarefa
+      tempo_restante: "01:00:00",//duracao_tarefa
       tempo_decorrido: "00:00:00",
       prazo: campo_prazo,
       observacoes: campo_observacoes,

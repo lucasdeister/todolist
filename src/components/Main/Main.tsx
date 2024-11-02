@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import style from "./Main.module.css"
 
@@ -13,62 +13,73 @@ import { UtilContext } from "../../context/UtilContext";
 
 function Main() {
 
+  const { modalState, setModalState, modalNome } = useContext(ModalContext);
+
+  const { tempoRestante, setTempoRestante, cronometroAtivo,
+    formatarTempo, tempoDecorrido, setTempoDecorrido, setCronometroAtivo
+  } = useContext(CronometroContext);
+
+  const { recuperarDados, tarefaEmExecucao,
+    arrayTarefas, obterIdCorrespondente, setIdArrayTarefaExecutando,
+    idArrayTarefaExecutando, tarefaExecutando, setTarefaExecutando,
+    atualizarItemNoLocalStorage
+  } = useContext(UtilContext);
+
   const columnsDesktop = ["Id", "Nome", "Status", "Início previsto", "Duração",
     "Tempo restante", "Tempo decorrido", "Realizar até", "Ações"];
   const columnsMobile = ["Id", "Nome", "Status", "Ações"];
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const columns = isMobile ? columnsMobile : columnsDesktop;
+  const columns = isMobile ? columnsMobile : columnsDesktop;
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-  const { modalState, setModalState, modalNome } = useContext(ModalContext);
-  
-  const { tempoRestante, setTempoRestante, cronometroAtivo,
-          formatarTempo, tempoDecorrido, setTempoDecorrido,
-          preencherTempoRestante, preencherTempoDecorrido, setCronometroAtivo
-        } = useContext(CronometroContext);
-
-  const { verificouTarefaExecutando, setVerificouTarefaExecutando, recuperarDados,
-          arrayTarefas, setTtarefaEmExecucao
-   } = useContext(UtilContext);
-
-  const continuarTarefaEmExecucao = useCallback((tarefa: any): void => {
-    preencherTempoRestante(tarefa.tempo_restante);
-    preencherTempoDecorrido(tarefa.tempo_decorrido);
-    setCronometroAtivo(true);
-    setTtarefaEmExecucao(true);
-    setVerificouTarefaExecutando(false);
-}, [preencherTempoRestante, preencherTempoDecorrido,
-   setCronometroAtivo, setTtarefaEmExecucao, setVerificouTarefaExecutando]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     recuperarDados();
-    setVerificouTarefaExecutando(true);
-  }, [setVerificouTarefaExecutando, recuperarDados]);
+  }, [recuperarDados]);
 
 
-useEffect(() => {
-  
-  const verificarTarefaEmExecucao = () => {
+  useEffect(() => {
+
+    const verificarTarefaEmExecucao = () => {
       const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
 
       return tarefaEmExecucao.length > 0 ? tarefaEmExecucao[0] : null;
-  };
+    };
 
-  if (verificouTarefaExecutando && arrayTarefas.length > 0) {
+    if (tarefaEmExecucao) {
       const tarefa = verificarTarefaEmExecucao();
-      if (tarefa) {
-          continuarTarefaEmExecucao(tarefa);
+
+      if (tarefa !== null) {
+        const id_tarefa_executando = tarefa.id;
+        const idCorrespondente = obterIdCorrespondente(id_tarefa_executando);
+        setTarefaExecutando(tarefa);
+        setIdArrayTarefaExecutando(idCorrespondente);
+        setCronometroAtivo(true);
       }
-  }
-}, [verificouTarefaExecutando, continuarTarefaEmExecucao, arrayTarefas]);
+    }
+
+  }, [tarefaEmExecucao, arrayTarefas])
+
+  useEffect(() => {
+
+    if(tarefaExecutando){
+
+      atualizarItemNoLocalStorage(idArrayTarefaExecutando,
+        {
+          tempo_restante: formatarTempo(tempoRestante),
+          tempo_decorrido: formatarTempo(tempoDecorrido)
+        });
+    }
+
+  }, [tarefaExecutando, arrayTarefas]);
+
 
   return (
     <main className={style.container_main}>
@@ -81,18 +92,18 @@ useEffect(() => {
         <BotaoPrincipal texto="Apagar" classe="danger" handleShow={() => setModalState(true)} />
       </div>
       <CustomModal
-          nome_modal={modalNome + " Tarefa"}
-          atualizarGrid={recuperarDados}
-          handleClose={() => setModalState(false)}
-          show={modalState}/>
-        <Cronometro
-            tempoRestante={tempoRestante}
-            setTempoRestante={setTempoRestante}
-            tempoDecorrido={tempoDecorrido}
-            setTempoDecorrido={setTempoDecorrido}
-            cronometroAtivo={cronometroAtivo}
-            formatarTempo={formatarTempo}/>
-        <Tabela columns={columns} data={arrayTarefas} isMobile={isMobile} />
+        nome_modal={modalNome + " Tarefa"}
+        atualizarGrid={recuperarDados}
+        handleClose={() => setModalState(false)}
+        show={modalState} />
+      <Cronometro
+        tempoRestante={tempoRestante}
+        setTempoRestante={setTempoRestante}
+        tempoDecorrido={tempoDecorrido}
+        setTempoDecorrido={setTempoDecorrido}
+        cronometroAtivo={cronometroAtivo}
+        formatarTempo={formatarTempo} />
+      <Tabela columns={columns} data={arrayTarefas} isMobile={isMobile} />
     </main>
   )
 }

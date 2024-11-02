@@ -21,13 +21,12 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         setCampoInicioDisabled, setCampoInicio, setCampoDuracaoHoras, setCampoDuracaoMinutos
         } = useContext(ModalContext);
 
-    const { setTempoRestante, preencherTempoRestante, setCronometroAtivo, tempoRestante,
-        formatarTempo, tempoDecorrido, setTempoDecorrido, preencherTempoDecorrido,
-        setBotaoExecutarDesativado, botaoExecutarDesativado
+    const { setTempoRestante, preencherTempoRestante, setCronometroAtivo, setTempoDecorrido,
+         preencherTempoDecorrido, setBotaoExecutarDesativado, botaoExecutarDesativado
     } = useContext(CronometroContext);
 
-    const { tarefaEmExecucao, setTtarefaEmExecucao, arrayTarefas, recuperarDados,
-        obterIdCorrespondente, setIdTarefaSelecionada, obterDiaAtual
+    const { tarefaEmExecucao, setTtarefaEmExecucao, arrayTarefas,
+        obterIdCorrespondente, setIdTarefaSelecionada, obterDiaAtual, setTarefaExecutando
      } = useContext(UtilContext);
 
     const idTarefaArray = obterIdCorrespondente(id);
@@ -123,49 +122,6 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         }
     }, [tarefaEmExecucao, setBotaoExecutarDesativado]);
 
-
-    useEffect(() => {
-
-        const atualizaTempoRestante = (id: number): void => {
-            arrayTarefas[id].tempo_restante = formatarTempo(tempoRestante);
-        };
-    
-        const atualizaTempoDecorrido = (id: number): void => {
-            arrayTarefas[id].tempo_decorrido = formatarTempo(tempoDecorrido);
-        };
-
-        const verificarTarefaEmExecucao = (): any => {
-
-            const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
-        
-                if(tarefaEmExecucao.length > 0){
-                  return tarefaEmExecucao[0];
-                }else{
-                  return null;
-                }
-          }
-
-          const atualizarTarefaEmExecucao = (id: number): void => {
-            const possuiTempoRestante = arrayTarefas[id].tempo_restante !== "00:00:00";
-    
-            if(possuiTempoRestante){
-                atualizaTempoRestante(id);
-            }
-            atualizaTempoDecorrido(id);
-        }
-
-        if(tarefaEmExecucao){
-            const tarefa = verificarTarefaEmExecucao();
-            if(tarefa){
-                const id_correspondente = obterIdCorrespondente(tarefa.id);
-                atualizarTarefaEmExecucao(id_correspondente);
-                localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
-                recuperarDados();
-            }
-        }
-    }, [tempoRestante, tarefaEmExecucao, tempoDecorrido,
-        recuperarDados, formatarTempo]);
-
     const executarTarefa = (id: number): void => {
         preencherTempoDecorrido(tempo_decorrido);
         preencherTempoRestante(tempo_restante);
@@ -177,14 +133,17 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
     const pausarTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
+        setTarefaExecutando(null);
         setBotaoExecutarDesativado(false);
         arrayTarefas[id].status = "Pausada";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
+        
     }
 
     const concluirTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
+        setTarefaExecutando(null);
         arrayTarefas[id].status = "Concluída";
         arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
@@ -195,6 +154,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
     const cancelarTarefa = (id: number): void => {
         setCronometroAtivo(false);
         setTtarefaEmExecucao(false);
+        setTarefaExecutando(null);
         arrayTarefas[id].status = "Cancelada";
         arrayTarefas[id].tempo_restante = "00:00:00";
         localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));

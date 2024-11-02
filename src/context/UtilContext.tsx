@@ -16,20 +16,25 @@ interface Tarefa {
 interface UtilContextProps {
   idTarefaSelecionada: number;
   arrayTarefas: Tarefa[];
-  verificouTarefaExecutando: boolean;
+  tarefaExecutando: Tarefa[];
+  obteveInformacaoLocalStorage: boolean;
   tituloToast: string;
   descricaoToast: string;
   tarefaEmExecucao: boolean;
+  idArrayTarefaExecutando: number;
   recuperarDados: () => void;
-  setVerificouTarefaExecutando: (tarefa_executando: boolean) => void;
+  setObteveInformacaoLocalStorage: (tarefa: boolean) => void;
   setIdTarefaSelecionada: (id_tarefa: number) => void;
   setTituloToast: (titulo_toast: string) => void;
   setDescricaoToast: (descricao_toast: string) => void;
   setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
   obterIdCorrespondente: (id: number) => number;
   obterDiaAtual: () => string;
+  setIdArrayTarefaExecutando: (idArrayTarefaExecutando: number) => void;
   validouCamposObrigatorios: (nome: string, prazo: string,
-    duracao_horas: number, duracao_minutos: number) => boolean;
+  duracao_horas: number, duracao_minutos: number) => boolean;
+  setTarefaExecutando: (tarefa: any) => void;
+  atualizarItemNoLocalStorage: (id: number, novasInformacoes: Partial<Tarefa>) => void;
 }
 
 // Criando o contexto com tipo adequado
@@ -42,6 +47,9 @@ interface UtilProviderProps {
 
 export const UtilProvider = ({ children }: UtilProviderProps) => {
 
+  const [idArrayTarefaExecutando, setIdArrayTarefaExecutando] = useState<number>(0);
+  const [tarefaExecutando, setTarefaExecutando] = useState<Tarefa[]>();
+
   const [idTarefaSelecionada, setIdTarefaSelecionada] = useState<number>(0);
 
   const [tituloToast, setTituloToast] = useState<string>("");
@@ -52,7 +60,7 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
   // Estado para armazenar as tarefas
   const [arrayTarefas, setArrayTarefas] = useState<Tarefa[]>([]);
 
-  const [verificouTarefaExecutando, setVerificouTarefaExecutando] = useState<boolean>(false);
+  const [obteveInformacaoLocalStorage, setObteveInformacaoLocalStorage] = useState<boolean>(false);
 
   // Função para recuperar dados do localStorage
   const recuperarDados = useCallback((): void => {
@@ -62,15 +70,27 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
       try {
         const arrayDeObjetosTarefas: Tarefa[] = JSON.parse(dadosArmazenados);
         setArrayTarefas(arrayDeObjetosTarefas);
+
       } catch (erro) {
         console.error("Erro ao parsear os dados do localStorage", erro);
       }
     }
   }, []);
 
-  const obterIdCorrespondente = (id: number): number => {
+  const atualizarItemNoLocalStorage = useCallback((id: number, novasInformacoes: Partial<Tarefa>) => {
+  
+      const arrayTarefas: Tarefa[] = JSON.parse(localStorage.getItem('tarefas'));
+      arrayTarefas[id] = { ...arrayTarefas[id], ...novasInformacoes };
+      localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
+
+      recuperarDados();
+  },[recuperarDados]);
+  
+
+
+  const obterIdCorrespondente = useCallback((id: number): number => {
     return arrayTarefas.findIndex((tarefaArray: { id: number; }) => tarefaArray.id === id);
-  }
+  }, [arrayTarefas])
 
   const obterDiaAtual = (): string => {
     const dataAtual = new Date();
@@ -95,9 +115,11 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
 return (
   <UtilContext.Provider value={{
     recuperarDados, arrayTarefas, idTarefaSelecionada,
-    setIdTarefaSelecionada, setVerificouTarefaExecutando, verificouTarefaExecutando,
+    setIdTarefaSelecionada, setObteveInformacaoLocalStorage, obteveInformacaoLocalStorage,
     tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual, validouCamposObrigatorios
+    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual, validouCamposObrigatorios,
+    idArrayTarefaExecutando, setIdArrayTarefaExecutando, tarefaExecutando, setTarefaExecutando,
+    atualizarItemNoLocalStorage
   }}>
     {children}
   </UtilContext.Provider>
