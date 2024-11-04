@@ -16,12 +16,12 @@ function Main() {
   const { modalState, setModalState, modalNome } = useContext(ModalContext);
 
   const { tempoRestante, setTempoRestante, cronometroAtivo,
-    formatarTempo, tempoDecorrido, setTempoDecorrido, setCronometroAtivo
+    formatarTempo, tempoDecorrido, setTempoDecorrido, setCronometroAtivo,
+    preencherTempoRestante, preencherTempoDecorrido
   } = useContext(CronometroContext);
 
   const { recuperarDados, tarefaEmExecucao,
-    arrayTarefas, obterIdCorrespondente, setIdArrayTarefaExecutando,
-    idArrayTarefaExecutando, tarefaExecutando, setTarefaExecutando,
+    arrayTarefas, idArrayTarefaExecutando, tarefaExecutando,
     atualizarItemNoLocalStorage, obteveDados, verificarTarefaEmExecucao,
     definirTarefaEmExecucao
   } = useContext(UtilContext);
@@ -42,15 +42,16 @@ function Main() {
   }, []);
 
   useEffect(() => {
-
+    
     recuperarDados();
 
     if(obteveDados){
       const tarefa = verificarTarefaEmExecucao();
       if (tarefa !== null) {
         definirTarefaEmExecucao(tarefa);
+        preencherTempoRestante(tarefa.tempo_restante);
+        preencherTempoDecorrido(tarefa.tempo_decorrido);
         setCronometroAtivo(true);
-        
       }
     }
 

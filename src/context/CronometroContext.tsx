@@ -38,7 +38,6 @@ export const CronometroProvider = ({ children }: CronometroProviderProps) => {
   const preencherTempoRestante = (tempo_restante: string): void =>{
     const tempo_titulo = converterTempoParaSegundos(tempo_restante);
     setTempoRestante(tempo_titulo);
-
 }
 
 const preencherTempoDecorrido = (tempo_decorrido: string): void =>{
