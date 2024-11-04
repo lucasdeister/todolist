@@ -25,7 +25,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
          preencherTempoDecorrido, setBotaoExecutarDesativado, botaoExecutarDesativado
     } = useContext(CronometroContext);
 
-    const { tarefaEmExecucao, setTtarefaEmExecucao, arrayTarefas,
+    const { tarefaEmExecucao, setTarefaEmExecucao, arrayTarefas,
         obterIdCorrespondente, setIdTarefaSelecionada, obterDiaAtual, setTarefaExecutando
      } = useContext(UtilContext);
 
@@ -126,13 +126,13 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
         preencherTempoDecorrido(tempo_decorrido);
         preencherTempoRestante(tempo_restante);
         setCronometroAtivo(true);
-        setTtarefaEmExecucao(true);
+        setTarefaEmExecucao(true);
         colocarTarefaEmExecucao(id);
     }
 
     const pausarTarefa = (id: number): void => {
         setCronometroAtivo(false);
-        setTtarefaEmExecucao(false);
+        setTarefaEmExecucao(false);
         setTarefaExecutando(null);
         setBotaoExecutarDesativado(false);
         arrayTarefas[id].status = "Pausada";
@@ -142,7 +142,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     const concluirTarefa = (id: number): void => {
         setCronometroAtivo(false);
-        setTtarefaEmExecucao(false);
+        setTarefaEmExecucao(false);
         setTarefaExecutando(null);
         arrayTarefas[id].status = "Concluída";
         arrayTarefas[id].tempo_restante = "00:00:00";
@@ -153,7 +153,7 @@ function ItemAction({ nome, nome_icone, id, tempo_restante, tempo_decorrido }: I
 
     const cancelarTarefa = (id: number): void => {
         setCronometroAtivo(false);
-        setTtarefaEmExecucao(false);
+        setTarefaEmExecucao(false);
         setTarefaExecutando(null);
         arrayTarefas[id].status = "Cancelada";
         arrayTarefas[id].tempo_restante = "00:00:00";

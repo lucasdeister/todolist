@@ -22,7 +22,8 @@ function Main() {
   const { recuperarDados, tarefaEmExecucao,
     arrayTarefas, obterIdCorrespondente, setIdArrayTarefaExecutando,
     idArrayTarefaExecutando, tarefaExecutando, setTarefaExecutando,
-    atualizarItemNoLocalStorage
+    atualizarItemNoLocalStorage, obteveDados, verificarTarefaEmExecucao,
+    definirTarefaEmExecucao
   } = useContext(UtilContext);
 
   const columnsDesktop = ["Id", "Nome", "Status", "Início previsto", "Duração",
@@ -41,44 +42,43 @@ function Main() {
   }, []);
 
   useEffect(() => {
+
     recuperarDados();
-  }, [recuperarDados]);
+
+    if(obteveDados){
+      const tarefa = verificarTarefaEmExecucao();
+      if (tarefa !== null) {
+        definirTarefaEmExecucao(tarefa);
+        setCronometroAtivo(true);
+        
+      }
+    }
+
+  }, [recuperarDados, obteveDados]);
 
 
   useEffect(() => {
 
-    const verificarTarefaEmExecucao = () => {
-      const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
-
-      return tarefaEmExecucao.length > 0 ? tarefaEmExecucao[0] : null;
-    };
-
     if (tarefaEmExecucao) {
       const tarefa = verificarTarefaEmExecucao();
-
-      if (tarefa !== null) {
-        const id_tarefa_executando = tarefa.id;
-        const idCorrespondente = obterIdCorrespondente(id_tarefa_executando);
-        setTarefaExecutando(tarefa);
-        setIdArrayTarefaExecutando(idCorrespondente);
-        setCronometroAtivo(true);
-      }
+      definirTarefaEmExecucao(tarefa);
+      setCronometroAtivo(true);
     }
 
   }, [tarefaEmExecucao, arrayTarefas])
 
   useEffect(() => {
-
-    if(tarefaExecutando){
-
-      atualizarItemNoLocalStorage(idArrayTarefaExecutando,
-        {
+    if (tarefaExecutando) {
+      const intervalId = setInterval(() => {
+        atualizarItemNoLocalStorage(idArrayTarefaExecutando, {
           tempo_restante: formatarTempo(tempoRestante),
-          tempo_decorrido: formatarTempo(tempoDecorrido)
+          tempo_decorrido: formatarTempo(tempoDecorrido),
         });
+      }, 100);
+  
+      return () => clearInterval(intervalId);
     }
-
-  }, [tarefaExecutando, arrayTarefas]);
+  }, [tarefaExecutando, tempoRestante, tempoDecorrido]);
 
 
   return (

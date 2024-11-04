@@ -17,17 +17,16 @@ interface UtilContextProps {
   idTarefaSelecionada: number;
   arrayTarefas: Tarefa[];
   tarefaExecutando: Tarefa[];
-  obteveInformacaoLocalStorage: boolean;
   tituloToast: string;
   descricaoToast: string;
   tarefaEmExecucao: boolean;
   idArrayTarefaExecutando: number;
+  obteveDados: boolean;
   recuperarDados: () => void;
-  setObteveInformacaoLocalStorage: (tarefa: boolean) => void;
   setIdTarefaSelecionada: (id_tarefa: number) => void;
   setTituloToast: (titulo_toast: string) => void;
   setDescricaoToast: (descricao_toast: string) => void;
-  setTtarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
+  setTarefaEmExecucao: (tarefaEmExecucao: boolean) => void;
   obterIdCorrespondente: (id: number) => number;
   obterDiaAtual: () => string;
   setIdArrayTarefaExecutando: (idArrayTarefaExecutando: number) => void;
@@ -35,6 +34,9 @@ interface UtilContextProps {
   duracao_horas: number, duracao_minutos: number) => boolean;
   setTarefaExecutando: (tarefa: any) => void;
   atualizarItemNoLocalStorage: (id: number, novasInformacoes: Partial<Tarefa>) => void;
+  setObteveDados: (obteve_dados: boolean) => void;
+  verificarTarefaEmExecucao: () => any;
+  definirTarefaEmExecucao: (tarefa: any) => void;
 }
 
 // Criando o contexto com tipo adequado
@@ -55,12 +57,12 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
   const [tituloToast, setTituloToast] = useState<string>("");
   const [descricaoToast, setDescricaoToast] = useState<string>("");
 
-  const [tarefaEmExecucao, setTtarefaEmExecucao] = useState<boolean>(false);
+  const [tarefaEmExecucao, setTarefaEmExecucao] = useState<boolean>(false);
+
+  const [obteveDados, setObteveDados] = useState<boolean>(false);
 
   // Estado para armazenar as tarefas
   const [arrayTarefas, setArrayTarefas] = useState<Tarefa[]>([]);
-
-  const [obteveInformacaoLocalStorage, setObteveInformacaoLocalStorage] = useState<boolean>(false);
 
   // Função para recuperar dados do localStorage
   const recuperarDados = useCallback((): void => {
@@ -70,6 +72,7 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
       try {
         const arrayDeObjetosTarefas: Tarefa[] = JSON.parse(dadosArmazenados);
         setArrayTarefas(arrayDeObjetosTarefas);
+        setObteveDados(true);
 
       } catch (erro) {
         console.error("Erro ao parsear os dados do localStorage", erro);
@@ -83,8 +86,8 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
       arrayTarefas[id] = { ...arrayTarefas[id], ...novasInformacoes };
       localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
 
-      recuperarDados();
-  },[recuperarDados]);
+      setArrayTarefas(arrayTarefas);
+  },[]);
   
 
 
@@ -112,14 +115,26 @@ export const UtilProvider = ({ children }: UtilProviderProps) => {
     }
   }
 
+  const verificarTarefaEmExecucao = () => {
+    const tarefaEmExecucao = arrayTarefas.filter((tarefa) => tarefa.status === "Executando");
+
+    return tarefaEmExecucao.length > 0 ? tarefaEmExecucao[0] : null;
+  };
+
+  const definirTarefaEmExecucao = (tarefa: any) :void =>  {
+    const id_tarefa_executando = tarefa.id;
+    const idCorrespondente = obterIdCorrespondente(id_tarefa_executando);
+    setTarefaExecutando(tarefa);
+    setIdArrayTarefaExecutando(idCorrespondente);
+  }
+
 return (
   <UtilContext.Provider value={{
     recuperarDados, arrayTarefas, idTarefaSelecionada,
-    setIdTarefaSelecionada, setObteveInformacaoLocalStorage, obteveInformacaoLocalStorage,
-    tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
-    setTtarefaEmExecucao, obterIdCorrespondente, obterDiaAtual, validouCamposObrigatorios,
+    setIdTarefaSelecionada, tituloToast, descricaoToast, setTituloToast, setDescricaoToast, tarefaEmExecucao,
+    setTarefaEmExecucao, obterIdCorrespondente, obterDiaAtual, validouCamposObrigatorios,
     idArrayTarefaExecutando, setIdArrayTarefaExecutando, tarefaExecutando, setTarefaExecutando,
-    atualizarItemNoLocalStorage
+    atualizarItemNoLocalStorage, obteveDados, setObteveDados, verificarTarefaEmExecucao, definirTarefaEmExecucao
   }}>
     {children}
   </UtilContext.Provider>
