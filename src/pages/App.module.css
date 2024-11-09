@@ -1,9 +1,9 @@
 .grid_container {
     display: grid;
     grid-template-areas:
-      'header header header header header header'
-      'main main main main main main'
-      'footer footer footer footer footer footer';
+    'header'
+    'main'
+    'footer';
   }
 
 
