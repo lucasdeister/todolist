@@ -51,9 +51,9 @@ function ContentModalTarefas({
       <Campo nome={"Início"} tipo={"date"} value={campo_inicio}
         onChange={(e) => setCampoInicio(e.target.value)} disabled={campo_inicio_disabled} />
       <div className={style.container_duracao}>
-        <Campo nome={"Duração em horas"} tipo={"number"} value={campo_duracao_horas.toString()}
+        <Campo nome={"Tempo em horas"} tipo={"number"} value={campo_duracao_horas.toString()}
          disabled={campo_duracao_disabled} onChange={(e) => setCampoDuracaoHoras(parseInt(e.target.value))} />
-        <Campo nome={"Duração em minutos"} tipo={"number"} value={campo_duracao_minutos.toString()}
+        <Campo nome={"Tempo em minutos"} tipo={"number"} value={campo_duracao_minutos.toString()}
           disabled={campo_duracao_disabled} onChange={(e) => setCampoDuracaoMinutos(parseInt(e.target.value))} />
       </div>
       <Campo nome={"Prazo"} tipo={"date"} value={campo_prazo}
