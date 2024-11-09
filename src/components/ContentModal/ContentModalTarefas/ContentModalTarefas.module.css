@@ -1,6 +1,6 @@
 .container_duracao{
     display: flex;
-    gap: 20px;
+    column-gap: 20px;
 }
 
 
